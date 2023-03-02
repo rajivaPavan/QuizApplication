@@ -1,5 +1,4 @@
 ﻿<template>
-$END$
 </template>
 
 <script>
