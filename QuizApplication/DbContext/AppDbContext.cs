@@ -6,9 +6,13 @@ namespace QuizApplication.DbContext
 {
     public class AppDbContext : IdentityDbContext<AppUser>
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            base.OnConfiguring(optionsBuilder);
         }
+
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<QuizQuestion> QuizQuestions { get; set; }
     }
 }
