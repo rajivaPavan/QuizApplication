@@ -50,6 +50,7 @@ namespace QuizApplication
 
             // add handlers
             services.AddScoped<IAuthHandler, AuthHandler>();
+            services.AddScoped<IQuizHandler, QuizHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +81,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Register}/{id?}");
+                    pattern: "{controller=Quiz}/{action=Attempt}/{id?}");
             });
         }
     }

@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "_QuizLayout";
+    ViewBag.Title = "Quiz";
+}
+
+<!-- Middle section with two columns -->
+<main class="flex-grow-1">
+    <div class="container-fluid py-3">
+        <div class="row">
+            <div class="col-lg-9 col-12">
+                <div class="container-fluid question-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="display-4">Question 2:</h3>
+                            <p class="lead my-4">What is the integral of $\int_{0}^{1} x^2 dx$?
+                                $$
+                                \int_{0}^{1} x^2 dx
+                                $$
+                                </p>
+                            <form>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="answer1" name="answer" type="radio" value="0">
+                                    <label class="form-check-label" for="answer1">
+                                        <span class="custom-radio"></span>
+                                        <span>$\frac{1}{4}$</span>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="answer2" name="answer" type="radio" value="1">
+                                    <label class="form-check-label" for="answer2">
+                                        <span class="custom-radio"></span>
+                                        $\frac{1}{3}$
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="answer" id="answer3" value="0">
+                                    <label class="form-check-label" for="answer3">
+                                        <span class="custom-radio"></span>
+                                        $\frac{1}{2}$
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="answer" id="answer4" value="0">
+                                    <label class="form-check-label" for="answer4">
+                                        <span class="custom-radio"></span>
+                                        $\frac{1}{5}$
+                                    </label>
+                                </div>
+                            </form>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="quiz-info">
+                    <!-- Add your sidebar or additional content here, using the col-md-4 class for desktop view -->
+                    <div class="d-flex justify-content-center align-items-center card clock border border-3 rounded mb-2">
+                        <div class="">
+                            <h2>Time Remaining</h2>
+                        </div>
+                        <div id="timer">
+                        </div>
+                    </div>
+
+                    <div class="questions my-3">
+                        <button type="button" class="q-no btn border border-dark attempted">Q 1</button>
+                        <button type="button" class="q-no btn border border-dark active">Q 2</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 3</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 4</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 1</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 2</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 3</button>
+                        <button type="button" class="q-no btn btn-light border border-dark">Q 4</button>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <div class="px-2 w-75">
+                            <a class="w-100 btn btn-tertiary">Next</a>
+                        </div>
+                    </div>
+                    <button class="w-100 btn btn-primary" id="finishBtn">Finish & Submit</button>
+                    <div id="submitCheck" class="hide">
+                        <div class="my-2">
+                        <span class="px-2">Are you sure?</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+
+                            <div class="px-2 w-50">
+                                <a class="w-100 btn btn-secondary">Yes</a>
+                            </div>
+                            <div class="px-2 w-50">
+                                <button class="w-100 btn btn-light border border-dark" id="dontFinish">No</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts
+{
+    <script src="~/js/quiz.js"></script>
+}
+
