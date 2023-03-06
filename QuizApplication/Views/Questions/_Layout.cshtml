@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/adminlte.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+<!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">
+                <span class="brand-text font-weight-light">Mora Maths Society</span>
+            </a>
+            <button class="navbar-toggler order-1" type="button" data-toggle="collapse" 
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- /.navbar -->
+    
+    @RenderBody()
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<!-- AdminLTE App -->
+<script src="~/js/adminlte.js"></script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js">
+</script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

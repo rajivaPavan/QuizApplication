@@ -81,7 +81,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Quiz}/{action=Attempt}/{id?}");
+                    pattern: "{controller=Questions}/{action=List}/{id?}");
             });
         }
     }
