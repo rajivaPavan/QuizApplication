@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QuizApplication.Entities;
 using QuizApplication.Handlers;
 using QuizApplication.ViewModels;
 
@@ -55,9 +56,12 @@ namespace QuizApplication.Controllers
 
             var res = await _authHandler.Register(model.Username, model.Email,
                 model.Password);
-
+            
             if (res.Succeeded)
             {
+                //add user to role
+                await _authHandler.AddUserToRole(await _authHandler.GetUser(model.Username), AppUserRole.User);
+                
                 // login
                 await _authHandler.SignIn(model.Username, model.Password);
 

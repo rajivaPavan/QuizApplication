@@ -24,8 +24,8 @@ namespace QuizApplication.DbOperations
         ///Retrieves all entities in the repository based on the predicate.
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate, IEnumerable<string> includes = null);
         
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
+        Task<T> AddAsync(T entity);
+        Task<T> UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }
     
@@ -69,16 +69,18 @@ namespace QuizApplication.DbOperations
             return await _queryable.Where(predicate).ToListAsync();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _entities.AddAsync(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _entities.Update(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeleteAsync(T entity)

@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using QuizApplication.Entities;
 using QuizApplication.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -9,6 +11,8 @@ namespace QuizApplication.Handlers
     {
         Task<SignInResult> SignIn(string username, string password);
         Task<IdentityResult> Register(string username, string email, string password);
+        Task AddUserToRole(AppUser user, AppUserRole userRole);
+        Task<AppUser> GetUser(string userName);
     }
     
     public class AuthHandler : IAuthHandler
@@ -39,6 +43,16 @@ namespace QuizApplication.Handlers
             var result = await _userManager.CreateAsync(user, password);
 
             return result;
+        }
+
+        public async Task AddUserToRole(AppUser user, AppUserRole userRole)
+        {
+            await _userManager.AddToRoleAsync(user, userRole.ToString());
+        }
+
+        public async Task<AppUser> GetUser(string userName)
+        {
+            return await _userManager.FindByNameAsync(userName);
         }
     }
 }

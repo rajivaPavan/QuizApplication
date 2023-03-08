@@ -63,7 +63,9 @@ namespace QuizApplication.Controllers
                 return RedirectToAction("List");
             }
             
-            return View(model);
+            return RedirectToAction("CreateQuestion", routeValues:new {
+                noOfAnswers = model.AnswersCount
+            });
         }
 
 
