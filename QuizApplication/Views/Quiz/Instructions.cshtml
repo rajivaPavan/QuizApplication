@@ -4,7 +4,7 @@
 }
 @section Styles
 {
-       <style>
+    <style>
             .container {
                 padding-top: 30px;
             }
@@ -13,7 +13,8 @@
             }
     
             .btn-start {
-                margin-top: 10px;
+                padding: 0.5rem 1rem;
+                font-size: 2rem;
             }
     
             ol {
@@ -28,6 +29,8 @@
         </style>
 }
 <div class="container">
+    <div style="text-align: center;" class="my-4"><a asp-action="Attempt" class="btn btn-primary btn-lg btn-start">Start Quiz</a>
+    </div>
     <div class="instructions card">
         <div class="card-header">
             <h1>Maths Quiz Instructions</h1>
@@ -60,7 +63,6 @@
             </ol>
         </div>
     </div>
-    <div style="text-align: center;"><a asp-action="Attempt" class="btn btn-primary btn-lg btn-start">Start Quiz</a>
-    </div>
+
 
 </div>

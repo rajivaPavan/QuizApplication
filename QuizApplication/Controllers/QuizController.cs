@@ -53,23 +53,17 @@ namespace QuizApplication.Controllers
             {
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 
-                // add and update the answer to the question
-                quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber).Answer = questionAnswer;
-                quiz.AttemptedQuestionCount++;
+                await _quizHandler.SubmitAnswerToQuestion(quiz, questionNumber, questionAnswer);
                 
-                // update the question status
-                await _quizHandler.UpdateQuiz(quiz);
 
                 // is last question
                 if (questionNumber == quiz.QuizQuestions.Count || isSubmit == 1)
                 {
-                    // set the finish time
-                    quiz.FinishedAt = DateTime.Now;
-                    
+                    await _quizHandler.FinishQuiz(quiz);
+
                     //remove quiz id from session
                     RemoveQuizIdInSession();
-                    // calculate the quiz results
-                    await _quizHandler.CalculateResults(quiz);
+                    
                     // redirect to result page
                     return RedirectToAction("Result");
                 }
@@ -127,7 +121,7 @@ namespace QuizApplication.Controllers
             var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
             return View(new QuizResultViewModel(quiz));
         }
-        
+
         public IActionResult Leaderboard()
         {
             return View();

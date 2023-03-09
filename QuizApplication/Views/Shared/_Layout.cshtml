@@ -8,7 +8,11 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-@await Html.PartialAsync("NavBar")
+@* if logged in *@
+@if (User.Identity is {IsAuthenticated: true })
+{
+    @await Html.PartialAsync("NavBar")
+}
 @RenderBody()
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

@@ -1,11 +1,20 @@
-﻿.quiz-info{
+﻿.card-header{
+    background-color: var(--color-background-mute);
+    color: var(--color-text);
+}
+.card-body{
+    background-color: var(--color-bg-translucent);
+    color: var(--color-text);
+}
+
+.quiz-info{
     background: var(--color-background-soft);
     border: 1px solid var(--color-border);
     padding: 1rem;
     border-radius: 0.5rem;
 }
 .clock{
-    font-size: 3em;
+    font-size: 2em;
     background: var(--color-bg-translucent-inv);
     border: 1px solid var(--color-border);
     font-weight: bold;
@@ -16,6 +25,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#timer{
+    font-size: 1.65em !important;
+}
+
+/*For mobile*/
+@media (max-width: 768px) {
+    .clock{
+        font-size: 1.5em;
+        padding: 0.5rem;
+        flex-direction: row;
+    }
+    #timer{
+        padding-left: 0.5rem;
+        font-size: 1.6em;
+    }
 }
 .active, .attempted{
     color: var(--vt-c-text-dark-1);
@@ -39,6 +65,20 @@
 
 .q-no{
     font-size: 1.5em;
+}
+
+/*mobile*/
+@media (max-width: 768px) {
+    .questions{
+        /*2 columns*/
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .q-no{
+        font-size : 1em;
+    }
+    #question-no{
+        font-size: 2em !important;
+    }
 }
 
 .question-container{

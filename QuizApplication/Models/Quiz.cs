@@ -11,8 +11,6 @@ namespace QuizApplication.Models
         public DateTime? FinishedAt { get; set; }
         public AppUser User { get; set; }
         public List<QuizQuestion> QuizQuestions { get; set; }
-        
-        
         public int? CorrectAnswerCount { get; set; }
         public int? AttemptedQuestionCount { get; set; }
         public int? Score { get; set; }

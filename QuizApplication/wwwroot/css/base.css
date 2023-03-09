@@ -29,6 +29,8 @@
     --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
     --vt-c-text-dark-1: var(--vt-c-white);
     --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+    
+
 }
 
 /* semantic color variables for this project */
@@ -60,6 +62,8 @@
 
     --section-gap: 160px;
     --bg-image: url(../images/bg.jpg);
+    
+    --brightness: 0.75;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,6 +82,8 @@
         --color-text-inv: var(--vt-c-text-light-1);
         
         --bg-image: url(../images/bg-dark.jpg);
+
+        --brightness: 0.25;
     }
 }
 

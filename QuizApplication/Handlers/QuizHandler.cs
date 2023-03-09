@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using QuizApplication.DbOperations;
@@ -10,11 +11,42 @@ namespace QuizApplication.Handlers
 {
     public interface IQuizHandler
     {
+        /// <summary>
+        /// Get the quiz with all questions and answers
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns></returns>
         Task<Quiz> GetQuiz(int quizId);
+        
+        /// <summary>
+        /// Create a quiz with random questions for the specified user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         Task<Quiz> CreateQuizForUser(AppUser user);
-        Task CalculateResults(Quiz quiz);
-        Task UpdateQuiz(Quiz quiz);
+        
+        /// <summary>
+        /// Get the last quiz for the specified user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         Task<Quiz> GetLastQuizForUser(string userId);
+        
+        /// <summary>
+        /// Submit the answer to the specified question
+        /// </summary>
+        /// <param name="quiz"></param>
+        /// <param name="questionNumber"></param>
+        /// <param name="questionAnswer"></param>
+        /// <returns></returns>
+        Task SubmitAnswerToQuestion(Quiz quiz, int questionNumber, string questionAnswer);
+        
+        /// <summary>
+        /// Set finish time and calculate results and save to db
+        /// </summary>
+        /// <param name="quiz"></param>
+        /// <returns></returns>
+        Task FinishQuiz(Quiz quiz);
     }
     
     public class QuizHandler : IQuizHandler
@@ -59,11 +91,19 @@ namespace QuizApplication.Handlers
             // get random questions from db
             var questions = await _questionRepository.GetAllAsync();
             var randomQuestions = new List<QuizQuestion>();
-            var random = new Random();
+            // list of unique random numbers
+            var uniqueRandoms = new List<int>();
+            var rand = new Random();
+            while (uniqueRandoms.Count < count) {
+                var num = rand.Next(0, questions.Count);
+                if (!uniqueRandoms.Contains(num)) {
+                    uniqueRandoms.Add(num);
+                }
+            }
             for (var i = 0; i < count; i++)
             {
                 // get a random question which is not already added to the quiz
-                var randomQuestion = questions[random.Next(questions.Count)];
+                var randomQuestion = questions[uniqueRandoms[i]];
                
                 randomQuestions.Add(new QuizQuestion()
                 {
@@ -71,52 +111,60 @@ namespace QuizApplication.Handlers
                     QuestionNo = i + 1,
                     StartedAt = null,
                     SubmittedAt = null,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    
                 });
             }
 
             return randomQuestions;
         }
 
-        public async Task CalculateResults(Quiz quiz)
+        private async Task CalculateResults(Quiz quiz)
         {
             // check if quiz question is text or multiple choice
             // if text, check if answer is correct
             // if multiple choice, check if selected option is correct
             
             quiz.Score = 0;
+            quiz.CorrectAnswerCount = 0;
+            quiz.AttemptedQuestionCount = 0;
             
             for(int i=0; i<quiz.QuizQuestions.Count; i++)
             {
                 var quizQuestion = quiz.QuizQuestions[i];
                 var question = quizQuestion.Question;
-                if (!string.IsNullOrEmpty(quizQuestion.Answer))
+                
+                if (string.IsNullOrEmpty(quizQuestion.Answer)) continue;
+                
+                quiz.AttemptedQuestionCount += 1;
+                quizQuestion.IsCorrect = false;
+                    
+                if (question.QuestionType == QuestionType.Text )
                 {
-                    quizQuestion.IsCorrect = false;
-                    
-                    if (question.QuestionType == QuestionType.Text )
+                    if (question.AnswerOptions[0].Text == quizQuestion.Answer)
                     {
-                        if (question.AnswerOptions[0].Text == quizQuestion.Answer)
-                        {
-                            quizQuestion.IsCorrect = true;
-                        }
-                    }
-                    else if (question.QuestionType == QuestionType.Mcq && !string.IsNullOrEmpty(quizQuestion.Answer))
-                    {
-                        // get the correct option
-                        var correctOption = question.AnswerOptions.Find(o => o.IsCorrect);
-                        if (correctOption != null && correctOption.AnswerNo.ToString() == quizQuestion.Answer)
-                        {
-                            quizQuestion.IsCorrect = true;
-                        }
-                    }
-                    
-                    if ((bool) quizQuestion.IsCorrect)
-                    {
-                        quiz.Score += 1;
+                        quizQuestion.IsCorrect = true;
                     }
                 }
+                else if (question.QuestionType == QuestionType.Mcq && !string.IsNullOrEmpty(quizQuestion.Answer))
+                {
+                    // get the correct option
+                    var correctOption = question.AnswerOptions.Find(o => o.IsCorrect);
+                    if (correctOption != null && correctOption.AnswerNo.ToString() == quizQuestion.Answer)
+                    {
+                        quizQuestion.IsCorrect = true;
+                    }
+                }
+                    
+                if ((bool) quizQuestion.IsCorrect)
+                {
+                    quiz.Score += 1;
+                    quiz.CorrectAnswerCount += 1;
+                }
+                
+                quiz.QuizQuestions[i] = quizQuestion;
             }
+            
             // update quiz
             await _quizRepository.UpdateAsync(quiz);
         }
@@ -128,7 +176,29 @@ namespace QuizApplication.Handlers
 
         public async Task<Quiz> GetLastQuizForUser(string userId)
         {
-            return await _quizRepository.GetAsync(q => q.UserId == userId);
+            var quizzes= await _quizRepository.GetAllAsync(q => q.UserId == userId);
+            return quizzes.Last();
+        }
+
+        public async Task SubmitAnswerToQuestion(Quiz quiz, int questionNumber, string questionAnswer)
+        {
+            // add and update the answer to the question
+            var answeredQuestionIndex = quiz.QuizQuestions.FindIndex(q => q.QuestionNo == questionNumber);
+            var answeredQuestion = quiz.QuizQuestions[answeredQuestionIndex];
+            answeredQuestion.Answer = questionAnswer;
+            answeredQuestion.SubmittedAt = DateTime.Now;
+            quiz.AttemptedQuestionCount++;
+            quiz.QuizQuestions[answeredQuestionIndex] = answeredQuestion;
+            await UpdateQuiz(quiz);
+        }
+
+        public async Task FinishQuiz(Quiz quiz)
+        {
+            // set the finish time
+            quiz.FinishedAt = DateTime.Now;
+                    
+            // calculate the quiz results
+            await CalculateResults(quiz);
         }
     }
 }
