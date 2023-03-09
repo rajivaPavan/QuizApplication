@@ -1,0 +1,76 @@
+﻿@model List<Question>
+
+@{
+    ViewBag.Title = "All Questions";
+    Layout = "_ManageLayout";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <h1>All Questions</h1>
+                </div>
+                <div class="col-8 d-flex justify-content-end">
+                    <a asp-action="CreateQuestion" asp-route-noOfAnswers="1" 
+                       class="btn btn-primary mr-2">Create Text Question</a>
+                    <a asp-action="CreateQuestion" asp-route-noOfAnswers="4" 
+                                           class="btn btn-info">Create MCQ Question</a>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="container">
+            <div class="row">
+                @if (Model.Any())
+                {
+                    var q_no = 0;
+                    foreach (var question in Model)
+                    {
+                        <div class="col-lg-6 col-12">
+                            <div class="card card-primary mb-3">
+                                <div class="card-header">No: @(++q_no) - Id: @question.Id</div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">Question: @question.Text</h5>
+                                    <div class="card-text mb-2">Answers:</div>
+                                    <div class="d-flex">
+                                        @{
+                                            var index = 0;
+                                            foreach (var answer in question.AnswerOptions)
+                                            {
+                                                <div class="card-text m-1">@((++index)+") "+answer.Text)</div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a asp-route-id="@question.Id" asp-action="EditQuestion" class="btn btn-warning">Edit</a>
+                                    <a asp-route-id="@question.Id" asp-action="DeleteQuestion" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            None created yet
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

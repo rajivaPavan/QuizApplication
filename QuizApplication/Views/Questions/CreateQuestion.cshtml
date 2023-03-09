@@ -1,0 +1,133 @@
+﻿@using QuizApplication.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model QuizApplication.ViewModels.CreateQuestionViewModel
+
+@{
+    ViewData["Title"] = "Create Question";
+    Layout = "_ManageLayout";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 justify-content-center">
+                <div class="col-12 col-md-10">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a asp-action="List">Questions</a>
+                        </li>
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form asp-action="CreateQuestion">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10">
+                        <div class="card card-primary">
+                            <div class="card-header d-flex align-items-center">
+                                <h2 class="mr-4">Create Question</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group d-flex">
+                                    <div class="col-6">
+                                        <label asp-for="Question" class="control-label"></label>
+                                        <textarea asp-for="Question" class="form-control" id="question"></textarea>
+                                        <span asp-validation-for="Question" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="control-label">Preview</label>
+                                        <div class="border rounded h-100 p-2" id="q-preview"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Answers:</label>
+                                </div>
+                                @{
+                                    for (int i = 0; i < Model.AnswersCount; i++)
+                                    {
+                                        <div class="form-group">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="d-flex align-items-center">
+                                                            <label asp-for="Answers[i].Text" class="control-label mr-2"></label>
+                                                            <input asp-for="Answers[i].Text" class="form-control" id="ans-@i"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-1">
+                                                        @if (Model.AnswersCount != 1)
+                                                        {
+                                                            <div class="icheck-primary">
+                                                                <input type="checkbox" asp-for="Answers[i].IsCorrect">
+                                                                <label asp-for="Answers[i].IsCorrect"></label>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="icheck-primary">
+                                                                <input type="checkbox" checked disabled>
+                                                                <label asp-for="Answers[i].IsCorrect"></label>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <div class="form-control" id="ans-preview-@i" ></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="Answers[i].Text" class="text-danger"></span>
+                                            <input asp-for="Answers[i].AnswerNo" value="@i" hidden/>
+                                        </div>
+                                    }
+                                }
+                                
+                                <div class="form-group d-flex">
+                                    <input hidden asp-for="AnswersCount" value="@Model.AnswersCount">
+                                    <input type="submit" value="Create Question" class="btn btn-primary mr-2"/>
+                                    <div class="icheck-primary my-2">
+                                        <input type="checkbox" asp-for="CreateAnother">
+                                        <label asp-for="CreateAnother"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
+@section Scripts
+{
+    <script>
+    $(document).ready(function () {
+        for (let i = 0; i < @Model.AnswersCount; i++) {
+            $("#ans-" + i).on("keyup", async function () {
+                let preview = $("#ans-preview-" + i);
+                preview.text($(this).val().toString());
+                await MathJax.typesetPromise()
+            });
+        }
+        $("#question").on("keyup", async function () {
+            let preview = $("#q-preview");
+            preview.text($(this).val().toString());
+            // Process the added text with MathJax
+            await MathJax.typesetPromise();
+        });        
+    });
+    </script>
+}

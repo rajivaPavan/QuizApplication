@@ -14,5 +14,11 @@ namespace QuizApplication.DbContext
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<QuizQuestion> QuizQuestions { get; set; }
+        
+        //on model creating
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

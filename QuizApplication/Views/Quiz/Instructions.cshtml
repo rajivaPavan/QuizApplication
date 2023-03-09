@@ -1,1 +1,68 @@
-﻿
+﻿@{
+    Layout = "_QuizLayout";
+    ViewBag.Title = "Quiz Instructions";
+}
+@section Styles
+{
+    <style>
+            .container {
+                padding-top: 30px;
+            }
+            .instructions {
+                margin-bottom: 20px;
+            }
+    
+            .btn-start {
+                padding: 0.5rem 1rem;
+                font-size: 2rem;
+            }
+    
+            ol {
+                line-height: 30px;
+                font-size: 15px;
+                text-align: justify;
+            }
+    
+            h1 {
+                text-align: center;
+            }
+        </style>
+}
+<div class="container">
+    <div style="text-align: center;" class="my-4"><a asp-action="Attempt" class="btn btn-primary btn-lg btn-start">Start Quiz</a>
+    </div>
+    <div class="instructions card">
+        <div class="card-header">
+            <h1>Maths Quiz Instructions</h1>
+        </div>
+        <div class="card-body">
+            <ol>
+                <li>Read the instructions carefully before beginning the quiz.</li>
+
+                <li>The quiz will consist of multiple choice questions. Choose the correct answer from the options
+                    provided.</li>
+
+                <li>Each question will have a time limit, so read and answer the questions quickly.</li>
+
+                <li>Do not spend too much time on a single question. If you are unsure of an answer, move on to the next
+                    question and come back to it later if time permits.</li>
+
+                <li>Do not cheat or use any unauthorized materials during the quiz.</li>
+
+                <li>You will not be able to go back to previous questions once you have moved on to the next question,
+                    so make sure you answer each question to the best of your ability before moving on.</li>
+
+                <li>Once you have answered all the questions, submit your quiz and wait for the results.</li>
+
+                <li>The competitor with the highest score will be declared the winner.</li>
+
+                <li>In case of a tie, the competitor who completed the quiz in the shortest time will be declared the
+                    winner.</li>
+
+                <li>Remember to have fun and do your best!</li>
+            </ol>
+        </div>
+    </div>
+
+
+</div>

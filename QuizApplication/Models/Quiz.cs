@@ -10,6 +10,10 @@ namespace QuizApplication.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? FinishedAt { get; set; }
         public AppUser User { get; set; }
-        public ICollection<QuizQuestion> QuizQuestions { get; set; }
+        public List<QuizQuestion> QuizQuestions { get; set; }
+        public int? CorrectAnswerCount { get; set; }
+        public int? AttemptedQuestionCount { get; set; }
+        public double? Score { get; set; }
+
     }
 }

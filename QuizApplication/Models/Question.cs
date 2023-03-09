@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuizApplication.Entities;
 
 namespace QuizApplication.Models
 {
@@ -7,8 +8,7 @@ namespace QuizApplication.Models
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public ICollection<AnswerOption> AnswerOptions { get; set; }
-        public ICollection<QuizQuestion> QuizQuestions { get; set; }
+        public List<AnswerOption> AnswerOptions { get; set; }
+        public QuestionType QuestionType { get; set; }
     }
 }

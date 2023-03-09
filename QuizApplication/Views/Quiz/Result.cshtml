@@ -1,18 +1,27 @@
-﻿@model object
-
+﻿@model QuizResultViewModel
 @{
-    Layout = null;
+    ViewBag.Title = "Quiz Result";
+    Layout = "_QuizLayout";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+<main class="flex-grow-1">
+    <div class="container">
+        <div class="row h-100 justify-content-center align-items-center mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h2>Quiz Result</h2></div>
+                    <div class="card-body">
+                        <h4 class="mb-3">Score: @Model.Score</h4>
+                        <p>Started At: @Model.StartedAt</p>
+                        <p>Finished At: @Model.FinishedAt</p>
+                        <p>Number of Correct Answers: @Model.NoOfQuestionsCorrect / @Model.NumberOfQuestions</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary mt-4 p-3" asp-action="Instructions"><h3>
+                        Try Quiz 1 More Time!
+                    </h3></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

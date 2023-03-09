@@ -5,10 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Handlers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
       <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
       <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
@@ -64,6 +60,10 @@
       </PackageReference>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\plugins" />
     </ItemGroup>
 
 </Project>
