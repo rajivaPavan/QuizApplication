@@ -13,6 +13,7 @@ namespace QuizApplication.Handlers
         Task<IdentityResult> Register(string username, string email, string password);
         Task AddUserToRole(AppUser user, AppUserRole userRole);
         Task<AppUser> GetUser(string userName);
+        Task SignOut();
     }
     
     public class AuthHandler : IAuthHandler
@@ -53,6 +54,11 @@ namespace QuizApplication.Handlers
         public async Task<AppUser> GetUser(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
+        }
+
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

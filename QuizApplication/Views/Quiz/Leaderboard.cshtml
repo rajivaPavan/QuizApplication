@@ -1,32 +1,80 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+﻿@{
+    Layout = "_QuizLayout";
+}
+@section Styles
+{
     <style>
-    .math-shapes {
-      fill: none;
-      stroke: #4285F4;
-      stroke-width: 2;
-    }
-    .math-lines {
-      stroke: #4285F4;
-      stroke-width: 0.5;
-    }
-  </style>
-    <rect width="100%" height="100%" fill="#F1F1F1" />
-    <g class="math-shapes">
-        <path d="M400 150 Q450 200, 500 150 T 600 150 T 700 150 T 800 150 T 900 150 T 950 200 T 1000 150" />
-        <path d="M200 250 L 600 250 L 600 400 L 200 400 Z" />
-        <path d="M800 250 L 1200 250 L 1200 400 L 800 400 Z" />
-        <path d="M300 500 L 500 500 L 500 650 L 300 650 Z" />
-        <path d="M700 500 L 900 500 L 900 650 L 700 650 Z" />
-    </g>
-    <g class="math-lines">
-        <line x1="0" y1="150" x2="1200" y2="150" />
-        <line x1="200" y1="0" x2="200" y2="800" />
-        <line x1="600" y1="250" x2="600" y2="400" />
-        <line x1="800" y1="250" x2="800" y2="400" />
-        <line x1="1200" y1="250" x2="1200" y2="400" />
-        <line x1="300" y1="500" x2="300" y2="650" />
-        <line x1="500" y1="500" x2="500" y2="650" />
-        <line x1="700" y1="500" x2="700" y2="650" />
-        <line x1="900" y1="500" x2="900" y2="650" />
-    </g>
-</svg>
+            .container {
+                margin-top: 30px;
+            }
+    
+            tr {
+                font-size: 20px;
+            }
+        </style>
+}
+
+<div class="container">
+    <h1 style="text-align: center; padding-bottom: 30px;">Leaderboard</h1>
+    <table class="table table-dark table-striped" style="text-align: center;">
+        <thead>
+        <tr style="font-size: 25px;">
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>John Smith</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Jane Dawson</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Kyle Kameson</td>
+            <td>85</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>John Smith</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Jane Dawson</td>
+            <td>70</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Kyle Kameson</td>
+            <td>60</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>John Smith</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Jane Dawson</td>
+            <td>40</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Kyle Kameson</td>
+            <td>35</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>John Smith</td>
+            <td>30</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

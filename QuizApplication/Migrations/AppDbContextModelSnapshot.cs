@@ -240,6 +240,9 @@ namespace QuizApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("QuestionType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -254,11 +257,20 @@ namespace QuizApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("AttemptedQuestionCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CorrectAnswerCount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("FinishedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
@@ -282,6 +294,9 @@ namespace QuizApplication.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool?>("IsCorrect")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
@@ -304,33 +319,6 @@ namespace QuizApplication.Migrations
                     b.HasIndex("QuizId");
 
                     b.ToTable("QuizQuestions");
-                });
-
-            modelBuilder.Entity("QuizApplication.Models.QuizResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuizId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TakenAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuizId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("QuizResults");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -413,19 +401,6 @@ namespace QuizApplication.Migrations
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("QuizApplication.Models.QuizResult", b =>
-                {
-                    b.HasOne("QuizApplication.Models.Quiz", "Quiz")
-                        .WithMany()
-                        .HasForeignKey("QuizId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("QuizApplication.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

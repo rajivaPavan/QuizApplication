@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Entities;
 using QuizApplication.Handlers;
@@ -6,6 +7,7 @@ using QuizApplication.ViewModels;
 
 namespace QuizApplication.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAuthHandler _authHandler;
@@ -15,12 +17,14 @@ namespace QuizApplication.Controllers
             _authHandler = authHandler;
         }
         
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -40,12 +44,14 @@ namespace QuizApplication.Controllers
             return RedirectToAction("Instructions", "Quiz");
         }
         
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-
+        
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -75,6 +81,12 @@ namespace QuizApplication.Controllers
             }
                 
             return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _authHandler.SignOut();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

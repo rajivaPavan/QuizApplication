@@ -1,16 +1,17 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
 using QuizApplication.ViewModels;
 
 namespace QuizApplication.Controllers
 {
+    [Authorize]
     public class QuizController : Controller
     {
         private readonly IQuizHandler _quizHandler;
@@ -23,6 +24,7 @@ namespace QuizApplication.Controllers
             _userManager = userManager;
         }
         
+        [HttpGet]
         public async Task<IActionResult> Attempt()
         {
             var quizId = GetQuizIdFromSession(HttpContext.Session);
@@ -31,13 +33,8 @@ namespace QuizApplication.Controllers
             {
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 // current quiz question
-                var quizQuestion = quiz.QuizQuestions.First(q => !q.isSubmitted());
-                var model = new QuizViewModel()
-                {
-                    QuizId = quiz.Id,
-                    QuestionNumber = quizQuestion.QuestionNo,
-                    QuizQuestion = quizQuestion
-                };
+                var quizQuestion = quiz.QuizQuestions.First(q => !q.IsSubmitted());
+                var model = new QuizViewModel(quiz, quizQuestion);
 
                 return View(model);
             }
@@ -47,7 +44,7 @@ namespace QuizApplication.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Attempt(QuizViewModel model)
+        public async Task<IActionResult> Attempt(int questionNumber, string questionAnswer, int? isSubmit)
         {
             // get quiz id from session
             var quizId = GetQuizIdFromSession(HttpContext.Session);
@@ -56,9 +53,19 @@ namespace QuizApplication.Controllers
             {
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 
+                // add and update the answer to the question
+                quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber).Answer = questionAnswer;
+                quiz.AttemptedQuestionCount++;
+                
+                // update the question status
+                await _quizHandler.UpdateQuiz(quiz);
+
                 // is last question
-                if (model.QuestionNumber == quiz.QuizQuestions.Count)
+                if (questionNumber == quiz.QuizQuestions.Count || isSubmit == 1)
                 {
+                    // set the finish time
+                    quiz.FinishedAt = DateTime.Now;
+                    
                     //remove quiz id from session
                     RemoveQuizIdInSession();
                     // calculate the quiz results
@@ -68,24 +75,19 @@ namespace QuizApplication.Controllers
                 }
                 
                 // increase the attempted question count
-                await _quizHandler.IncreaseAttemptedQCount(quiz);
-                
-                model = UpdateQuestionInView(model, quiz);
+                var question = GetNextQuestion(quiz, questionNumber);
 
+                var model = new QuizViewModel(quiz, question);
+                
                 return View(model);
             }
             
-            return View(model);
+            return RedirectToAction("Start");
         }
 
-        private static QuizViewModel UpdateQuestionInView(QuizViewModel model, Quiz quiz)
+        private static QuizQuestion GetNextQuestion(Quiz quiz, int questionNumber)
         {
-            // update view model with next question
-            var quizQuestion = quiz.QuizQuestions.First(q => q.QuestionNo == model.QuestionNumber + 1);
-
-            model.QuizQuestion = quizQuestion;
-
-            return model;
+            return quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber + 1);
         }
 
         private void RemoveQuizIdInSession()
@@ -119,9 +121,11 @@ namespace QuizApplication.Controllers
             session.SetInt32(SessionQuizIdKey, quizId);
         }
 
-        public IActionResult Result()
+        public async Task<IActionResult> Result()
         {
-            return View();
+            // get last attempted quiz of the user
+            var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
+            return View(new QuizResultViewModel(quiz));
         }
         
         public IActionResult Leaderboard()

@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuizApplication.Entities;
 using QuizApplication.Models;
 using QuizApplication.ViewModels.RoleViewModels;
 
 namespace QuizApplication.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -19,7 +21,7 @@ namespace QuizApplication.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
-
+        
         public IActionResult CreateRole()
         {
             return View();

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuizApplication.DbOperations;
 using QuizApplication.Entities;
@@ -8,6 +9,7 @@ using QuizApplication.ViewModels;
 
 namespace QuizApplication.Controllers
 {
+    [Authorize(Roles = "Admin, Manager")]
     public class QuestionsController : Controller
     {
         private readonly IQuestionRepository _questionRepository;
@@ -37,10 +39,12 @@ namespace QuizApplication.Controllers
             {
                 return View(model);
             }
+            var questionType = model.AnswersCount == 1 ? QuestionType.Text : QuestionType.Mcq;
             // loop through answers and add them to the question
             var question = new Question
             {
-                Text = model.Question
+                Text = model.Question,
+                QuestionType = questionType
             };
             
             if (model.AnswersCount != 1 && model.Answers.All(answer => !answer.IsCorrect))

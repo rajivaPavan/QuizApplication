@@ -5,7 +5,7 @@ namespace QuizApplication.Models
     public class QuizResult
     {
         public int Id { get; set; }
-        public int Score { get; set; }
+        
         public DateTime TakenAt { get; set; }
     
         // Navigation properties

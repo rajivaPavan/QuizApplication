@@ -50,8 +50,7 @@ namespace QuizApplication.DbOperations
         
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, IEnumerable<string> includes = null)
         {
-            
-            return await _queryable.SingleOrDefaultAsync(predicate);
+            return await _queryable.FirstOrDefaultAsync(predicate);
         }
 
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> predicate, IEnumerable<string> includes = null)

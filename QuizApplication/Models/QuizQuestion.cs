@@ -14,8 +14,9 @@ namespace QuizApplication.Models
         public DateTime? SubmittedAt { get; set; }
         public Quiz Quiz { get; set; }
         public Question Question { get; set; }
+        public bool? IsCorrect { get; set; }
 
-        public bool isSubmitted()
+        public bool IsSubmitted()
         {
             return SubmittedAt != null;
         }

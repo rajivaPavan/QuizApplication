@@ -30,7 +30,6 @@
 $(function () {
     $('#submitCheck').hide();
     setCountdown();
-
 });
 
 // submit button
@@ -39,4 +38,40 @@ $('#finishBtn').click(function () {
 });
 $('#dontFinish').click(function () {
     $('#submitCheck').hide();
+});
+
+const submitQuestion = (isFinish = false)=>{
+    const textQuestionForm = $('#text-q-a');
+    
+    if(textQuestionForm.is('form')){
+        const textAnswer = $("#questionAnswer");
+        if(textAnswer.val() === "" || textAnswer.val() == null){
+            return;
+        }
+        if(isFinish) {
+            // add hidden input to form
+            textQuestionForm.append('<input type="hidden" name="isSubmit" value="1" />');
+        }
+        textQuestionForm.submit();
+    }else{
+        
+        const mcqForm = $('#mcq-a');
+        const mcqAnswer = $("input[name='questionAnswer']:checked");
+        if(mcqAnswer.val() === "" || mcqAnswer.val() == null){
+            return;
+        }
+        if(isFinish) {
+            // add hidden input to form
+            textQuestionForm.append('<input type="hidden" name="isSubmit" value="1" />');
+        }
+        mcqForm.submit();
+    }
+
+};
+$("#next-btn").click(()=>{
+    submitQuestion();
+});
+
+$("#submit-btn").click(()=> {
+    submitQuestion(true);
 });
