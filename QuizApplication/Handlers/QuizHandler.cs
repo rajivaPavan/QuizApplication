@@ -158,7 +158,7 @@ namespace QuizApplication.Handlers
                     
                 if ((bool) quizQuestion.IsCorrect)
                 {
-                    quiz.Score += 1;
+                    quiz = ScoreAnswer(quiz, quizQuestion);
                     quiz.CorrectAnswerCount += 1;
                 }
                 
@@ -167,6 +167,29 @@ namespace QuizApplication.Handlers
             
             // update quiz
             await _quizRepository.UpdateAsync(quiz);
+        }
+
+        /// <summary>
+        /// Scores the answer and updates the quiz score
+        /// </summary>
+        /// <param name="quiz">The quiz to score</param>
+        /// <param name="quizQuestion">The answer and the question</param>
+        /// <returns>Quiz quiz</returns>
+        private static Quiz ScoreAnswer(Quiz quiz, QuizQuestion quizQuestion)
+        {
+            var questionScore = 50.0;
+            if (quizQuestion.SubmittedAt != null && quizQuestion.StartedAt != null)
+            {
+                var timeTaken = (quizQuestion.SubmittedAt - quizQuestion.StartedAt).Value.TotalSeconds;
+                if (timeTaken < 60)
+                {
+                    questionScore += 50 * (60 - timeTaken / 60);
+                }
+            }
+
+            quiz.Score += questionScore;
+            
+            return quiz;
         }
 
         public async Task UpdateQuiz(Quiz quiz)

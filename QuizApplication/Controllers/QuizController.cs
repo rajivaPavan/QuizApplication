@@ -117,6 +117,11 @@ namespace QuizApplication.Controllers
 
         public async Task<IActionResult> Result()
         {
+            // Check if the session contains quiz attempt data
+            if (IsQuizInSession(HttpContext.Session))
+            {
+                return RedirectToAction("Attempt");
+            }
             // get last attempted quiz of the user
             var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
             return View(new QuizResultViewModel(quiz));

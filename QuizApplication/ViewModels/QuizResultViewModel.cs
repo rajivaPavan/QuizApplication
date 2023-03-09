@@ -14,7 +14,7 @@ namespace QuizApplication.ViewModels
             NoOfQuestionsCorrect = quiz.CorrectAnswerCount ?? 0;
         }
 
-        public int Score { get; set; }
+        public double Score { get; set; }
         public string StartedAt { get; set; }
         public string FinishedAt { get; set; }
         public int NumberOfQuestions { get; set; }

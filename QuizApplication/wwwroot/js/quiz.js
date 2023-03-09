@@ -75,5 +75,6 @@ $("#next-btn").click(()=>{
 });
 
 $("#submit-btn").click(()=> {
+    localStorage.removeItem('quizStartTime');
     submitQuestion(true);
 });

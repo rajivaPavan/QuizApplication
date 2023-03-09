@@ -13,7 +13,7 @@ namespace QuizApplication.Models
         public List<QuizQuestion> QuizQuestions { get; set; }
         public int? CorrectAnswerCount { get; set; }
         public int? AttemptedQuestionCount { get; set; }
-        public int? Score { get; set; }
+        public double? Score { get; set; }
 
     }
 }
