@@ -6,6 +6,7 @@ using QuizApplication.DbOperations;
 using QuizApplication.Entities;
 using QuizApplication.Models;
 using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.QuestionViewModels;
 
 namespace QuizApplication.Controllers
 {

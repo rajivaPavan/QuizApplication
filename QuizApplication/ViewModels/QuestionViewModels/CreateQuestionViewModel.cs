@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using QuizApplication.Entities;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.QuestionViewModels
 {
     public class CreateQuestionViewModel
     {

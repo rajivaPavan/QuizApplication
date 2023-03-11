@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.AccountViewModels
 {
     public class LoginViewModel
     {

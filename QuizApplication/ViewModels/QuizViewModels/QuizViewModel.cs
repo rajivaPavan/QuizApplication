@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc;
-using QuizApplication.Models;
+﻿using QuizApplication.Models;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.QuizViewModels
 {
     public class QuizViewModel
     {

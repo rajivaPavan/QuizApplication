@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Entities;
 using QuizApplication.Handlers;
 using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.AccountViewModels;
 
 namespace QuizApplication.Controllers
 {
@@ -60,8 +61,7 @@ namespace QuizApplication.Controllers
                 return View(model);
             }
 
-            var res = await _authHandler.Register(model.Username, model.Email,
-                model.Password);
+            var res = await _authHandler.Register(model);
             
             if (res.Succeeded)
             {

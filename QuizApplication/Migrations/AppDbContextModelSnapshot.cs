@@ -374,7 +374,7 @@ namespace QuizApplication.Migrations
 
             modelBuilder.Entity("QuizApplication.Models.AnswerOption", b =>
                 {
-                    b.HasOne("QuizApplication.Models.Question", "Question")
+                    b.HasOne("QuizApplication.Models.Question", null)
                         .WithMany("AnswerOptions")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)

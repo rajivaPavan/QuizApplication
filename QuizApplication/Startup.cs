@@ -53,10 +53,7 @@ namespace QuizApplication
             
             // add repositories
             services.AddScoped<IQuestionRepository, QuestionRepository>();
-            services.AddScoped<IQuizQuestionRepository, QuizQuestionRepository>();
             services.AddScoped<IQuizRepository, QuizRepository>();
-            services.AddScoped<IQuizResultRepository, QuizResultRepository>();
-            services.AddScoped<IAnswerOptionRepository, AnswerOptionRepository>();
 
             // add handlers
             services.AddScoped<IAuthHandler, AuthHandler>();
@@ -93,7 +90,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Questions}/{action=List}/{id?}");
+                    pattern: "{controller=Quiz}/{action=Leaderboard}/{id?}");
             });
         }
     }

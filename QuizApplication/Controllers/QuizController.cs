@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
 using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.QuizViewModels;
 
 namespace QuizApplication.Controllers
 {
@@ -89,6 +90,7 @@ namespace QuizApplication.Controllers
             HttpContext.Session.Remove(SessionQuizIdKey);
         }
 
+        [AllowAnonymous]
         public IActionResult Instructions()
         {
             // Check if the session contains quiz attempt data
@@ -127,6 +129,7 @@ namespace QuizApplication.Controllers
             return View(new QuizResultViewModel(quiz));
         }
 
+        [AllowAnonymous]
         public IActionResult Leaderboard()
         {
             return View();

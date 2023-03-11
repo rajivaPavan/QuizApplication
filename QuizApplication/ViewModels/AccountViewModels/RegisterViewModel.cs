@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.AccountViewModels
 {
     public class RegisterViewModel
     {
@@ -20,5 +20,13 @@ namespace QuizApplication.ViewModels
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+
+        // [Required]
+        // [DataType(DataType.Text)]
+        // public string Name { get; set; }
     }
 }
