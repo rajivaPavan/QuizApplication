@@ -25,8 +25,8 @@ namespace QuizApplication.ViewModels.AccountViewModels
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        // [Required]
-        // [DataType(DataType.Text)]
-        // public string Name { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        public string Name { get; set; }
     }
 }

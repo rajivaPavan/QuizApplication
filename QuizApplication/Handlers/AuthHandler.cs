@@ -41,7 +41,7 @@ namespace QuizApplication.Handlers
             var user = new AppUser
             {
                 UserName = model.Username,
-                // Name = model.Name,
+                Name = model.Name,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber
             };
