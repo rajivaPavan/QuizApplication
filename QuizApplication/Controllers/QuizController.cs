@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QuizApplication.Authorization;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
-using QuizApplication.ViewModels;
 using QuizApplication.ViewModels.QuizViewModels;
 
 namespace QuizApplication.Controllers
@@ -25,6 +25,7 @@ namespace QuizApplication.Controllers
             _userManager = userManager;
         }
         
+        [Authorize(Policy = Policies.QuizAccessAndTime)]
         [HttpGet]
         public async Task<IActionResult> Attempt()
         {
@@ -44,6 +45,7 @@ namespace QuizApplication.Controllers
             return RedirectToAction("Start");
         }
         
+        [Authorize(Policy = Policies.QuizAccessAndTime)]
         [HttpPost]
         public async Task<IActionResult> Attempt(int questionNumber, string questionAnswer, int? isSubmit)
         {
@@ -126,6 +128,8 @@ namespace QuizApplication.Controllers
             }
             // get last attempted quiz of the user
             var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
+            if(quiz == null)
+                return RedirectToAction("Instructions");
             return View(new QuizResultViewModel(quiz));
         }
 
@@ -135,6 +139,7 @@ namespace QuizApplication.Controllers
             return View();
         }
 
+        [Authorize(Policy = Policies.QuizAccessAndTime)]
         public async Task<IActionResult> Start()
         {
             //Create a new quiz with random questions and saves it in database

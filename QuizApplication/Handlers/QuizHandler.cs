@@ -159,7 +159,7 @@ namespace QuizApplication.Handlers
         public async Task<Quiz> GetLastQuizForUser(string userId)
         {
             var quizzes= await _quizRepository.GetAllAsync(q => q.UserId == userId);
-            return quizzes.Last();
+            return quizzes.Any() ? quizzes.Last() : null;
         }
 
         public async Task SubmitAnswerToQuestion(Quiz quiz, int questionNumber, string questionAnswer)
