@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc;
-using QuizApplication.Models;
+﻿using QuizApplication.Models;
+using QuizApplication.ViewModels.QuestionViewModels;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.QuizViewModels
 {
     public class QuizViewModel
     {
@@ -15,11 +14,14 @@ namespace QuizApplication.ViewModels
         {
             QuizId = quiz.Id;
             QuizQuestion = quizQuestion;
+            QuestionImage = QuestionViewModel.DecorateUrl(quizQuestion.Question.ImageUrl);
             QuestionNumber = quizQuestion.QuestionNo;
             QuestionCount = quiz.QuizQuestions.Count;
             AnswerCount = quizQuestion.Question.AnswerOptions.Count;
         }
-        
+
+        public string QuestionImage { get; set; }
+
         public int QuizId { get; set; }
         public QuizQuestion QuizQuestion { get; set; }
 

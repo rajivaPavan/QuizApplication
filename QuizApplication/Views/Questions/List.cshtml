@@ -5,6 +5,16 @@
     Layout = "_ManageLayout";
 }
 
+@section Styles
+{
+    <style>
+        .q-image{
+            width: 80%;
+            object-fit: contain;
+        }
+    </style>
+}
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -31,14 +41,21 @@
             <div class="row">
                 @if (Model.Any())
                 {
-                    var q_no = 0;
+                    var qNo = 0;
                     foreach (var question in Model)
                     {
                         <div class="col-lg-6 col-12">
                             <div class="card card-primary mb-3">
-                                <div class="card-header">No: @(++q_no) - Id: @question.Id</div>
+                                <div class="card-header">No: @(++qNo) - Id: @question.Id</div>
+                                
                                 <div class="card-body">
                                     <h5 class="card-title mb-3">Question: @question.Text</h5>
+                                    @if (!string.IsNullOrEmpty(question.ImageUrl))
+                                    {
+                                        <div class="card-img d-flex justify-content-center py-2">
+                                            <img src="@question.ImageUrl" class="q-image" alt="question-image"/>
+                                        </div>
+                                    }
                                     <div class="card-text mb-2">Answers:</div>
                                     <div class="d-flex">
                                         @{

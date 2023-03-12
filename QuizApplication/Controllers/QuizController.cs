@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
+using QuizApplication.Authorization;
+using QuizApplication.Entities;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
-using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.QuizViewModels;
 
 namespace QuizApplication.Controllers
 {
@@ -16,17 +19,23 @@ namespace QuizApplication.Controllers
     {
         private readonly IQuizHandler _quizHandler;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IFeatureManager _featureManager;
         private const string SessionQuizIdKey = "quiz_id";
 
-        public QuizController(IQuizHandler quizHandler, UserManager<AppUser> userManager)
+        public QuizController(IQuizHandler quizHandler, UserManager<AppUser> userManager, 
+            IFeatureManager featureManager)
         {
             _quizHandler = quizHandler;
             _userManager = userManager;
+            _featureManager = featureManager;
         }
         
         [HttpGet]
         public async Task<IActionResult> Attempt()
         {
+            if(!await QuizAccessAllowed(HttpContext))
+                return RedirectToAction("Instructions");
+            
             var quizId = GetQuizIdFromSession(HttpContext.Session);
 
             if (quizId != null)
@@ -44,8 +53,12 @@ namespace QuizApplication.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Attempt(int questionNumber, string questionAnswer, int? isSubmit)
+        public async Task<IActionResult> Attempt(int questionNumber, string questionAnswer, 
+            int? isSubmit)
         {
+            if(!await QuizAccessAllowed(HttpContext))
+                return RedirectToAction("Instructions");
+            
             // get quiz id from session
             var quizId = GetQuizIdFromSession(HttpContext.Session);
 
@@ -89,6 +102,7 @@ namespace QuizApplication.Controllers
             HttpContext.Session.Remove(SessionQuizIdKey);
         }
 
+        [AllowAnonymous]
         public IActionResult Instructions()
         {
             // Check if the session contains quiz attempt data
@@ -124,9 +138,12 @@ namespace QuizApplication.Controllers
             }
             // get last attempted quiz of the user
             var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
+            if(quiz == null)
+                return RedirectToAction("Instructions");
             return View(new QuizResultViewModel(quiz));
         }
 
+        [AllowAnonymous]
         public IActionResult Leaderboard()
         {
             return View();
@@ -134,6 +151,9 @@ namespace QuizApplication.Controllers
 
         public async Task<IActionResult> Start()
         {
+            if(!await QuizAccessAllowed(HttpContext))
+                return RedirectToAction("Instructions");
+            
             //Create a new quiz with random questions and saves it in database
             var quiz = await _quizHandler.CreateQuizForUser(await _userManager.GetUserAsync(User));
 
@@ -141,6 +161,14 @@ namespace QuizApplication.Controllers
             SetQuizIdInSession(HttpContext.Session, quiz.Id);
 
             return RedirectToAction("Attempt");
+        }
+
+        private async Task<bool> QuizAccessAllowed(HttpContext context)
+        {
+            var isAdmin = context.User.IsInRole(AppUserRoles.Admin);
+            var quizAccess = await _featureManager.IsEnabledAsync(FeatureFlags.QuizAccess);
+            var quizTime = await _featureManager.IsEnabledAsync(FeatureFlags.QuizTime);
+            return isAdmin || quizAccess && quizTime;
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using QuizApplication.Models;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.QuizViewModels
 {
     public class QuizResultViewModel
     {

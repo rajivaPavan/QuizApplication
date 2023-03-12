@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Entities;
 using QuizApplication.Handlers;
 using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.AccountViewModels;
 
 namespace QuizApplication.Controllers
 {
@@ -28,6 +29,14 @@ namespace QuizApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            // return url from query string
+            var returnUrl = Request.Query["ReturnUrl"].ToString();
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Instructions", "Quiz");
+            }
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -41,6 +50,11 @@ namespace QuizApplication.Controllers
                 return View(model);
             }
 
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             return RedirectToAction("Instructions", "Quiz");
         }
         
@@ -48,6 +62,10 @@ namespace QuizApplication.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Instructions", "Quiz");
+            }
             return View();
         }
         
@@ -60,8 +78,7 @@ namespace QuizApplication.Controllers
                 return View(model);
             }
 
-            var res = await _authHandler.Register(model.Username, model.Email,
-                model.Password);
+            var res = await _authHandler.Register(model);
             
             if (res.Succeeded)
             {
@@ -87,6 +104,12 @@ namespace QuizApplication.Controllers
         {
             await _authHandler.SignOut();
             return RedirectToAction("Login", "Account");
+        }
+        
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return RedirectToAction("Instructions", "Quiz");
         }
     }
 }

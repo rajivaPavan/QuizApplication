@@ -1,4 +1,4 @@
-﻿@model RegisterViewModel
+﻿@model QuizApplication.ViewModels.AccountViewModels.RegisterViewModel
 
 @section Styles
 {
@@ -11,28 +11,34 @@
             <form class="form" method="post">
                 <h2>Register</h2>
                 <div class="form-group">
-                    <label for="Username">Name:</label>
+                    <label for="Username">Index Number:</label>
                     <input asp-for="Username" type="text" class="form-control"
-                           id="Username" name="Username" placeholder="Enter your name" required>
+                           id="Username" name="Username" placeholder="Enter your university index number" required>
                     <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Username">Name:</label>
+                    <input asp-for="Name" type="text" class="form-control"
+                           id="Name" name="Username" placeholder="Enter your first name and surname" required>
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="Email">Email:</label>
                     <input asp-for="Email" type="email" class="form-control" 
-                           id="Email" name="Email" placeholder="Enter your email" required>
+                           id="Email" name="Email" placeholder="Enter any active email address" required>
                     <span class="text-danger" asp-validation-for="Email"></span>
                     
                 </div>
                 <div class="form-group">
                     <label for="Password">Password:</label>
                     <input asp-for="Password" type="password" class="form-control" 
-                           id="Password" name="Password" placeholder="Enter your password" required>
+                           id="Password" name="Password" placeholder="" required>
                     <span class="text-danger" asp-validation-for="Password"></span>
                 </div>
                 <div class="form-group">
                     <label for="ConfirmPassword">Confirm Password:</label>
                     <input asp-for="ConfirmPassword" type="password" class="form-control" 
-                           id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm your password" required>
+                           id="ConfirmPassword" name="ConfirmPassword" placeholder="" required>
                     <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
                 </div>
                 <div asp-validation-summary="All"></div>

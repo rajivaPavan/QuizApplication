@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using QuizApplication.Entities;
 
-namespace QuizApplication.ViewModels
+namespace QuizApplication.ViewModels.QuestionViewModels
 {
     public class CreateQuestionViewModel
     {
@@ -19,6 +18,9 @@ namespace QuizApplication.ViewModels
         public bool CreateAnother { get; set; }
 
         public int AnswersCount { get; set; }
+        
+        [Display(Name = "Image File Name")]
+        public string ImageFileName { get; set; }
     }
     
     public class AnswerOptionDto

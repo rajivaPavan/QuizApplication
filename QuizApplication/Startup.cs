@@ -10,6 +10,9 @@ using QuizApplication.DbContext;
 using QuizApplication.DbOperations;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
+using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.FeatureFilters;
+using QuizApplication.Authorization;
 
 namespace QuizApplication
 {
@@ -53,14 +56,25 @@ namespace QuizApplication
             
             // add repositories
             services.AddScoped<IQuestionRepository, QuestionRepository>();
-            services.AddScoped<IQuizQuestionRepository, QuizQuestionRepository>();
             services.AddScoped<IQuizRepository, QuizRepository>();
-            services.AddScoped<IQuizResultRepository, QuizResultRepository>();
-            services.AddScoped<IAnswerOptionRepository, AnswerOptionRepository>();
 
             // add handlers
             services.AddScoped<IAuthHandler, AuthHandler>();
             services.AddScoped<IQuizHandler, QuizHandler>();
+
+            services.AddAzureAppConfiguration();
+            services.AddFeatureManagement()
+                .AddFeatureFilter<TimeWindowFilter>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.QuizAccessAndTime,
+                    policy =>
+                    {
+                        policy.Requirements.Add(
+                            new QuizAccessAndTimeRequirement());
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +90,8 @@ namespace QuizApplication
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAzureAppConfiguration();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -93,7 +109,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Questions}/{action=List}/{id?}");
+                    pattern: "{controller=Quiz}/{action=Leaderboard}/{id?}");
             });
         }
     }

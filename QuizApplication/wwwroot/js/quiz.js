@@ -1,5 +1,5 @@
 ﻿function setCountdown(){
-    const quizDuration = 1000 * 30; // 30 seconds
+    const quizDuration = 1000 * 60 *30 ; // 30 minutes
     
     // Get the starting time from localStorage, or set it to the current time if it's not set yet
     let startTime = localStorage.getItem('quizStartTime') || new Date().getTime();

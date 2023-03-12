@@ -6,6 +6,7 @@ using QuizApplication.DbOperations;
 using QuizApplication.Entities;
 using QuizApplication.Models;
 using QuizApplication.ViewModels;
+using QuizApplication.ViewModels.QuestionViewModels;
 
 namespace QuizApplication.Controllers
 {
@@ -23,6 +24,12 @@ namespace QuizApplication.Controllers
         public async Task<IActionResult> List()
         {
             var model = await _questionRepository.GetAllAsync();
+            //update each question image url
+            model.ForEach(question =>
+            {
+                question.ImageUrl = QuestionViewModel.DecorateUrl(question.ImageUrl);
+            });
+            
             return View(model);
         }
         
@@ -44,7 +51,8 @@ namespace QuizApplication.Controllers
             var question = new Question
             {
                 Text = model.Question,
-                QuestionType = questionType
+                QuestionType = questionType,
+                ImageUrl = model.ImageFileName
             };
             
             if (model.AnswersCount != 1 && model.Answers.All(answer => !answer.IsCorrect))
