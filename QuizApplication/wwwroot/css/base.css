@@ -61,7 +61,7 @@
     --color-tertiary-hover: var(--vt-c-theme-yellow-dark);
 
     --section-gap: 160px;
-    --bg-image: url(../images/bg.jpg);
+    --bg-image: url("https://assetimagesweb.blob.core.windows.net/moramaths/bg.jpg");
     
     --brightness: 0.75;
 }
@@ -81,7 +81,7 @@
         --color-text: var(--vt-c-text-dark-1);
         --color-text-inv: var(--vt-c-text-light-1);
         
-        --bg-image: url(../images/bg-dark.jpg);
+        --bg-image: url("https://assetimagesweb.blob.core.windows.net/moramaths/bg-dark.jpg");
 
         --brightness: 0.25;
     }
