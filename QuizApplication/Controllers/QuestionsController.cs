@@ -24,6 +24,12 @@ namespace QuizApplication.Controllers
         public async Task<IActionResult> List()
         {
             var model = await _questionRepository.GetAllAsync();
+            //update each question image url
+            model.ForEach(question =>
+            {
+                question.ImageUrl = QuestionViewModel.DecorateUrl(question.ImageUrl);
+            });
+            
             return View(model);
         }
         
