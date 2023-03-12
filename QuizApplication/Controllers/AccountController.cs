@@ -34,7 +34,7 @@ namespace QuizApplication.Controllers
             
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Instructions", "Quiz");
+                return RedirectToAction("Home", "Quiz");
             }
             
             if (!ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace QuizApplication.Controllers
                 return Redirect(returnUrl);
             }
 
-            return RedirectToAction("Instructions", "Quiz");
+            return RedirectToAction("Home", "Quiz");
         }
         
         [AllowAnonymous]
@@ -64,7 +64,7 @@ namespace QuizApplication.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Instructions", "Quiz");
+                return RedirectToAction("Home", "Quiz");
             }
             return View();
         }
@@ -88,7 +88,7 @@ namespace QuizApplication.Controllers
                 // login
                 await _authHandler.SignIn(model.Username, model.Password);
 
-                return RedirectToAction("Instructions", "Quiz");;
+                return RedirectToAction("Home", "Quiz");;
             };
             
             // add errors to the model
@@ -109,7 +109,7 @@ namespace QuizApplication.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Instructions", "Quiz");
+            return RedirectToAction("Home", "Quiz");
         }
     }
 }

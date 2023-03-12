@@ -25,3 +25,19 @@ body {
     backdrop-filter: brightness(var(--brightness));
     background-size: cover;
 }
+.navbar{
+    padding: 3px !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-border) !important;
+}
+.navbar li a{
+    font-weight: bold !important;
+    color: var(--vt-c-text-dark-1) !important;
+}
+#logout{
+    color: var(--vt-c-text-light-1) !important;
+    font-weight: normal !important;
+}
+#main{
+    margin-top: 45px;
+}

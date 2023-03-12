@@ -109,7 +109,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Quiz}/{action=Leaderboard}/{id?}");
+                    pattern: "{controller=Quiz}/{action=Home}/{id?}");
             });
         }
     }

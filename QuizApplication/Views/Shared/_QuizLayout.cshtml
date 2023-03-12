@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using QuizApplication.Entities
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewData["Title"]</title>
@@ -9,7 +10,10 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="d-flex flex-column min-vh-100">
-@await Html.PartialAsync("NavBar")
+@if (User.Identity is {IsAuthenticated: true } && User.IsInRole(AppUserRoles.Admin))
+{
+    @await Html.PartialAsync("NavBar")
+}
 
 @RenderBody()
 
@@ -23,7 +27,7 @@ MathJax = {
 };
 </script>
 <script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js">
+        src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js">
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>

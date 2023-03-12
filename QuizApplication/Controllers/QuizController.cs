@@ -34,7 +34,7 @@ namespace QuizApplication.Controllers
         public async Task<IActionResult> Attempt()
         {
             if(!await QuizAccessAllowed(HttpContext))
-                return RedirectToAction("Instructions");
+                return RedirectToAction("Home");
             
             var quizId = GetQuizIdFromSession(HttpContext.Session);
 
@@ -57,7 +57,7 @@ namespace QuizApplication.Controllers
             int? isSubmit)
         {
             if(!await QuizAccessAllowed(HttpContext))
-                return RedirectToAction("Instructions");
+                return RedirectToAction("Home");
             
             // get quiz id from session
             var quizId = GetQuizIdFromSession(HttpContext.Session);
@@ -103,7 +103,7 @@ namespace QuizApplication.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Instructions()
+        public IActionResult Home()
         {
             // Check if the session contains quiz attempt data
             if (IsQuizInSession(HttpContext.Session))
@@ -139,7 +139,7 @@ namespace QuizApplication.Controllers
             // get last attempted quiz of the user
             var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
             if(quiz == null)
-                return RedirectToAction("Instructions");
+                return RedirectToAction("Home");
             return View(new QuizResultViewModel(quiz));
         }
 
@@ -152,7 +152,7 @@ namespace QuizApplication.Controllers
         public async Task<IActionResult> Start()
         {
             if(!await QuizAccessAllowed(HttpContext))
-                return RedirectToAction("Instructions");
+                return RedirectToAction("Home");
             
             //Create a new quiz with random questions and saves it in database
             var quiz = await _quizHandler.CreateQuizForUser(await _userManager.GetUserAsync(User));
