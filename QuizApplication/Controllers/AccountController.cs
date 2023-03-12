@@ -29,6 +29,14 @@ namespace QuizApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            // return url from query string
+            var returnUrl = Request.Query["ReturnUrl"].ToString();
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Instructions", "Quiz");
+            }
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -42,6 +50,11 @@ namespace QuizApplication.Controllers
                 return View(model);
             }
 
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             return RedirectToAction("Instructions", "Quiz");
         }
         
@@ -49,6 +62,10 @@ namespace QuizApplication.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Instructions", "Quiz");
+            }
             return View();
         }
         
