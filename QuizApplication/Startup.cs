@@ -65,7 +65,6 @@ namespace QuizApplication
             services.AddAzureAppConfiguration();
             services.AddFeatureManagement()
                 .AddFeatureFilter<TimeWindowFilter>();
-            ;
 
             services.AddAuthorization(options =>
             {

@@ -4,6 +4,17 @@
     ViewBag.Title = "Quiz";
 }
 
+@section Styles
+{
+    <style>
+        .q-image{
+         max-width: 100%;
+         max-height: 350px;
+         object-fit: contain;
+        }
+    </style>
+}
+
 <!-- Middle section with two columns -->
 <main class="flex-grow-1">
     <div class="container-fluid py-3">
@@ -16,6 +27,9 @@
                             <p class="lead my-4" id="question-text">
                                 @Model.QuizQuestion.Question.Text
                             </p>
+                            <div class="my-4 px-4">
+                                <img src="@Model.QuizQuestion.Question.ImageUrl" alt="question image" class="img-fluid q-image"/>
+                            </div>
                             @if (Model.AnswerCount == 1)
                             {
                                 <form method="post" id="text-q-a">

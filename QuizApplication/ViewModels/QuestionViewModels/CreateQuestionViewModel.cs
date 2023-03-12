@@ -18,6 +18,9 @@ namespace QuizApplication.ViewModels.QuestionViewModels
         public bool CreateAnother { get; set; }
 
         public int AnswersCount { get; set; }
+        
+        [Display(Name = "Image File Name")]
+        public string ImageFileName { get; set; }
     }
     
     public class AnswerOptionDto

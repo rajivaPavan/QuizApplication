@@ -45,7 +45,8 @@ namespace QuizApplication.Controllers
             var question = new Question
             {
                 Text = model.Question,
-                QuestionType = questionType
+                QuestionType = questionType,
+                ImageUrl = model.ImageFileName
             };
             
             if (model.AnswersCount != 1 && model.Answers.All(answer => !answer.IsCorrect))

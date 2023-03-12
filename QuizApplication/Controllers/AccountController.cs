@@ -105,5 +105,11 @@ namespace QuizApplication.Controllers
             await _authHandler.SignOut();
             return RedirectToAction("Login", "Account");
         }
+        
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return RedirectToAction("Instructions", "Quiz");
+        }
     }
 }
