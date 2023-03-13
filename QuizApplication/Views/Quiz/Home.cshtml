@@ -1,4 +1,5 @@
-﻿@{
+﻿@using QuizApplication.Entities
+@{
     Layout = "_QuizLayout";
     ViewBag.Title = "Quiz Home";
 }
@@ -11,7 +12,7 @@
     <div class="row">
         <!-- left column -->
         <div class="col-md-3 d-flex align-items-center" id="">
-            <img src="https://assetimagesweb.blob.core.windows.net/moramaths/mora_maths_vertical_logo_black_text.png"
+            <img src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/mora_maths_vertical_logo_black_text.png"
                  class="img-fluid"/>
         </div>
         
@@ -34,12 +35,20 @@
                     </li>
                 </ol>
             </div>
-            <div style="text-align: center;" class="my-4">
-                <a asp-action="Attempt" class="btn btn-tertiary btn-lg btn-start">Attempt Quiz</a>
+            <div class="d-flex my-4 justify-content-around">
+                <feature name="@FeatureFlags.QuizAccess,@FeatureFlags.QuizTime" requirement="All">
+                    <div style="text-align: center;">
+                        <a asp-action="Attempt" class="btn btn-tertiary btn-lg btn-start">Attempt Quiz</a>
+                    </div>
+                </feature>
+                <div style="text-align: center;">
+                    <a asp-action="Leaderboard" class="btn btn-tertiary btn-lg btn-start">Leaderboard</a>
+                </div>
             </div>
+            
         </div>
         <div class="col-md-3 d-flex align-items-center">
-            <img src="https://assetimagesweb.blob.core.windows.net/moramaths/m-day_logo_white.png" 
+            <img src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/m-day_logo_white.png" 
                  class="img-fluid" alt="m-day logo">
         </div>
         
