@@ -156,8 +156,13 @@ namespace QuizApplication.Controllers
             if(!await QuizAccessAllowed(HttpContext))
                 return RedirectToAction("Home");
             
+            // check if user has already done the quiz
+            var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
+            if (quiz != null)
+                return RedirectToAction("Leaderboard");
+            
             //Create a new quiz with random questions and saves it in database
-            var quiz = await _quizHandler.CreateQuizForUser(await _userManager.GetUserAsync(User));
+            quiz = await _quizHandler.CreateQuizForUser(await _userManager.GetUserAsync(User));
 
             // store quiz id in session
             SetQuizIdInSession(HttpContext.Session, quiz.Id);
