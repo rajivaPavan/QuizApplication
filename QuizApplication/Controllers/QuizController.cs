@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
-using QuizApplication.Authorization;
 using QuizApplication.Entities;
 using QuizApplication.Handlers;
 using QuizApplication.Models;
@@ -21,13 +21,15 @@ namespace QuizApplication.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IFeatureManager _featureManager;
         private const string SessionQuizIdKey = "quiz_id";
+        private readonly QuizSettings _quizSettings;
 
         public QuizController(IQuizHandler quizHandler, UserManager<AppUser> userManager, 
-            IFeatureManager featureManager)
+            IFeatureManager featureManager, IOptions<QuizSettings> options)
         {
             _quizHandler = quizHandler;
             _userManager = userManager;
             _featureManager = featureManager;
+            _quizSettings = options.Value;
         }
         
         [HttpGet]
@@ -167,7 +169,12 @@ namespace QuizApplication.Controllers
         {
             var isAdmin = context.User.IsInRole(AppUserRoles.Admin);
             var quizAccess = await _featureManager.IsEnabledAsync(FeatureFlags.QuizAccess);
-            var quizTime = await _featureManager.IsEnabledAsync(FeatureFlags.QuizTime);
+            // start 
+            var start = DateTime.Parse(_quizSettings.QuizStartAt);
+            // end
+            var end = DateTime.Parse(_quizSettings.QuizEndAt);
+            var now = DateTime.Now;
+            var quizTime = start <= now && now <= end;
             return isAdmin || quizAccess && quizTime;
         }
     }
