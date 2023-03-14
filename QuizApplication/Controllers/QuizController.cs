@@ -31,6 +31,8 @@ namespace QuizApplication.Controllers
             _userManager = userManager;
             _featureManager = featureManager;
             _quizSettings = options.Value;
+            _quizSettings.QuizEndAt ??= "2023/03/13 00:00:00";
+            _quizSettings.QuizStartAt ??= "2021/03/16 00:00:00";
         }
         
         [HttpGet]

@@ -15,12 +15,12 @@
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <!-- Left navbar links -->
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a asp-action="Home" asp-controller="Quiz" class="nav-link">Attempt Quiz</a>
-                </li>
-                <li>
+                @if (!Context.Request.Path.ToString().Contains("/Quiz/Leaderboard"))
+                {
+                    <li>
                     <a asp-action="Leaderboard" asp-controller="Quiz" class="nav-link">Leaderboard</a>
                 </li>
+                }                
                 @if(User.IsInRole("Admin"))
                 {
                     <li class="nav-item">
@@ -42,7 +42,14 @@
                         <a asp-action="Logout" id="logout" asp-controller="Account" class="btn btn-tertiary">Logout</a>
                     </li>
                 </ul>
-            }
+            }else
+                {
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a asp-action="Login" id="login" asp-controller="Account" class="btn btn-tertiary" style="color:black !important;">Login</a>
+                    </li>
+                </ul>
+                }
         </div>
     </div>
 </nav>

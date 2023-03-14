@@ -13,13 +13,14 @@ namespace QuizApplication.Handlers
     {
         private readonly IQuizRepository _quizRepository;
         private readonly IQuestionRepository _questionRepository;
-        private readonly QuizSettings settings;
+        private readonly QuizSettings _settings;
 
         public QuizHandler(IQuizRepository quizRepository, IQuestionRepository questionRepository, IOptionsSnapshot<QuizSettings> settings)
         {
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
-            this.settings = settings.Value;
+            _settings = settings.Value;
+            _settings.QuestionCount = 25;
         }
 
 
@@ -33,7 +34,7 @@ namespace QuizApplication.Handlers
             // create a quiz from 3 random questions selected from db
             var quiz = new Quiz()
             {
-                QuizQuestions = await GetRandomQuestions(settings.QuestionCount),
+                QuizQuestions = await GetRandomQuestions(_settings.QuestionCount),
                 CreatedAt = DateTime.Now,
                 User = user,
                 UserId = user.Id

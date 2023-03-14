@@ -49,7 +49,7 @@ namespace QuizApplication.DbOperations
             {
                 if(q[i].Id == quiz.Id)
                 {
-                    return i;
+                    return i+1;
                 }
             }
             return count;
