@@ -25,7 +25,7 @@ namespace QuizApplication.Controllers
         private readonly QuizSettings _quizSettings;
 
         public QuizController(IQuizHandler quizHandler, UserManager<AppUser> userManager, 
-            IFeatureManager featureManager, IOptions<QuizSettings> options)
+            IFeatureManager featureManager, IOptionsSnapshot<QuizSettings> options)
         {
             _quizHandler = quizHandler;
             _userManager = userManager;

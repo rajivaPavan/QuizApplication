@@ -193,7 +193,7 @@ namespace QuizApplication.Handlers
 
         public async Task<int> GetUserRank(Quiz quiz)
         {
-            return _quizRepository.GetQuizRank(quiz);
+            return await _quizRepository.GetQuizRank(quiz);
         }
 
         public Task UpdateQuizQuestion(QuizQuestion quizQuestion)

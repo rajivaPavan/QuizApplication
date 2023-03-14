@@ -6,6 +6,8 @@ namespace QuizApplication.ViewModels.AccountViewModels
     {
         [Required]
         [DataType(DataType.Text)]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d{6})\S+$",
+         ErrorMessage = "Given Index Number has an Invalid format")]
         public string Username { get; set; }
         
         [Required]

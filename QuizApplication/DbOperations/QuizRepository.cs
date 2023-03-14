@@ -12,7 +12,7 @@ namespace QuizApplication.DbOperations
     {
         Task<Quiz> GetFullQuiz(int quizId);
         Task<List<Quiz>> GetFirstNQuizzes(int n);
-        int GetQuizRank(Quiz quiz);
+        Task<int> GetQuizRank(Quiz quiz);
         Task UpdateQuizQuestion(QuizQuestion quizQuestion);
     }
     
@@ -40,10 +40,19 @@ namespace QuizApplication.DbOperations
                 .OrderByDescending(q => q.Score).Take(n).ToListAsync();
         }
 
-        public int GetQuizRank(Quiz quiz)
+        public async Task<int> GetQuizRank(Quiz quiz)
         {
             // after ordering by score, get the rank of the user
-            return _context.Quizzes.OrderByDescending(q => q.Score).IndexOf(quiz) + 1;
+            var q = await _context.Quizzes.OrderByDescending(q => q.Score).ToListAsync();
+            int count = q.Count();
+            for (int i = 0; i< count; i++)
+            {
+                if(q[i].Id == quiz.Id)
+                {
+                    return i;
+                }
+            }
+            return count;
         }
 
         public Task UpdateQuizQuestion(QuizQuestion quizQuestion)
