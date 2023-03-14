@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @Html.PartialAsync("MetaTags")
+    @await Html.PartialAsync("MetaTags")
     <title>@ViewData["Title"]</title>
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="stylesheet" href="~/css/quiz.css"/>
-    @if (User.IsInRole(AppUserRoles.User))
+    @if (User.IsInRole(AppUserRoles.User) || !User.Identity.IsAuthenticated)
     {
         <style>
             #main{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -146,9 +147,19 @@ namespace QuizApplication.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Leaderboard()
+        public async Task<IActionResult> Leaderboard()
         {
-            return View();
+            var quizzes = await _quizHandler.GetLeaderBoard();
+            var model = new LeaderboardViewModel(quizzes);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
+                model.QuizResult = new QuizResultViewModel(quiz);
+                model.UserRank = await _quizHandler.GetUserRank(quiz);
+            }
+            
+            return View(model);
         }
 
         public async Task<IActionResult> Start()

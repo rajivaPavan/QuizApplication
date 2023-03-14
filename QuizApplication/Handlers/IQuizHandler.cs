@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using QuizApplication.Models;
 
 namespace QuizApplication.Handlers
@@ -41,5 +42,8 @@ namespace QuizApplication.Handlers
         /// <param name="quiz"></param>
         /// <returns></returns>
         Task FinishQuiz(Quiz quiz);
+
+        Task<List<Quiz>> GetLeaderBoard();
+        Task<int> GetUserRank(Quiz quiz);
     }
 }

@@ -182,5 +182,15 @@ namespace QuizApplication.Handlers
             // calculate the quiz results
             await CalculateResults(quiz);
         }
+
+        public async Task<List<Quiz>> GetLeaderBoard()
+        {
+            return await _quizRepository.GetFirstNQuizzes(10);
+        }
+
+        public async Task<int> GetUserRank(Quiz quiz)
+        {
+            return _quizRepository.GetQuizRank(quiz);
+        }
     }
 }
