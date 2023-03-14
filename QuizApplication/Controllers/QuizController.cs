@@ -43,6 +43,7 @@ namespace QuizApplication.Controllers
 
             if (quizId != null)
             {
+
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 // current quiz question
                 var quizQuestion = quiz.QuizQuestions.First(q => !q.IsSubmitted());
@@ -50,7 +51,7 @@ namespace QuizApplication.Controllers
 
                 return View(model);
             }
-
+            
             // retrieve quiz from db
             return RedirectToAction("Start");
         }
@@ -61,7 +62,7 @@ namespace QuizApplication.Controllers
         {
             if(!await QuizAccessAllowed(HttpContext))
                 return RedirectToAction("Home");
-            
+
             // get quiz id from session
             var quizId = GetQuizIdFromSession(HttpContext.Session);
 
