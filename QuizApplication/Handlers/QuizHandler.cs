@@ -142,7 +142,7 @@ namespace QuizApplication.Handlers
                 var timeTaken = (quizQuestion.SubmittedAt - quizQuestion.StartedAt).Value.TotalSeconds;
                 if (timeTaken < 60)
                 {
-                    questionScore += 50 * (60 - timeTaken / 60);
+                    questionScore += 50 * ((60 - timeTaken )/ 60);
                 }
             }
 
@@ -191,6 +191,11 @@ namespace QuizApplication.Handlers
         public async Task<int> GetUserRank(Quiz quiz)
         {
             return _quizRepository.GetQuizRank(quiz);
+        }
+
+        public Task UpdateQuizQuestion(QuizQuestion quizQuestion)
+        {
+            return _quizRepository.UpdateQuizQuestion(quizQuestion);
         }
     }
 }

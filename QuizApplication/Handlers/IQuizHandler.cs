@@ -45,5 +45,6 @@ namespace QuizApplication.Handlers
 
         Task<List<Quiz>> GetLeaderBoard();
         Task<int> GetUserRank(Quiz quiz);
+        Task UpdateQuizQuestion(QuizQuestion quizQuestion);
     }
 }

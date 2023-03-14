@@ -47,6 +47,10 @@ namespace QuizApplication.Controllers
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 // current quiz question
                 var quizQuestion = quiz.QuizQuestions.First(q => !q.IsSubmitted());
+                // updated started at of quizQuestion
+                quizQuestion.StartedAt = DateTime.Now;
+                // update quizQuestion in db
+                await _quizHandler.UpdateQuizQuestion(quizQuestion);
                 var model = new QuizViewModel(quiz, quizQuestion);
 
                 return View(model);
@@ -86,7 +90,7 @@ namespace QuizApplication.Controllers
                 }
                 
                 // increase the attempted question count
-                var question = GetNextQuestion(quiz, questionNumber);
+                var question = await GetNextQuestion(quiz, questionNumber);
 
                 var model = new QuizViewModel(quiz, question);
                 
@@ -96,8 +100,19 @@ namespace QuizApplication.Controllers
             return RedirectToAction("Start");
         }
 
-        private static QuizQuestion GetNextQuestion(Quiz quiz, int questionNumber)
+        /// <summary>
+        /// Update the quiz question with the current time and return the next question
+        /// </summary>
+        /// <param name="quiz"></param>
+        /// <param name="questionNumber"></param>
+        /// <returns></returns>
+        private async Task<QuizQuestion> GetNextQuestion(Quiz quiz, int questionNumber)
         {
+            var current = quiz.QuizQuestions.First(
+                q => q.QuestionNo == questionNumber);
+            current.StartedAt = DateTime.Now;
+            // update quizQuestion in db
+            await _quizHandler.UpdateQuizQuestion(current);
             return quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber + 1);
         }
 

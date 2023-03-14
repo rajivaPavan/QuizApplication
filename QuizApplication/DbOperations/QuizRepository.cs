@@ -13,6 +13,7 @@ namespace QuizApplication.DbOperations
         Task<Quiz> GetFullQuiz(int quizId);
         Task<List<Quiz>> GetFirstNQuizzes(int n);
         int GetQuizRank(Quiz quiz);
+        Task UpdateQuizQuestion(QuizQuestion quizQuestion);
     }
     
     public class QuizRepository : Repository<Quiz>, IQuizRepository
@@ -43,6 +44,12 @@ namespace QuizApplication.DbOperations
         {
             // after ordering by score, get the rank of the user
             return _context.Quizzes.OrderByDescending(q => q.Score).IndexOf(quiz);
+        }
+
+        public Task UpdateQuizQuestion(QuizQuestion quizQuestion)
+        {
+            _context.QuizQuestions.Update(quizQuestion);
+            return _context.SaveChangesAsync();
         }
     }
 }
