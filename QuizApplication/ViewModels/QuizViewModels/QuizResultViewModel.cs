@@ -7,7 +7,7 @@ namespace QuizApplication.ViewModels.QuizViewModels
         public QuizResultViewModel(Quiz quiz)
         {
             if (quiz.User != null) Name = quiz.User.Name;
-            Score = quiz.Score ?? 0;
+            Score = System.Math.Round(quiz.Score ?? 0, 3);
             StartedAt = quiz.CreatedAt.ToString("dd/MM/yyyy HH:mm");
             FinishedAt = quiz.FinishedAt?.ToString("dd/MM/yyyy HH:mm") ?? "Not finished";
             if (quiz.QuizQuestions != null) NumberOfQuestions = quiz.QuizQuestions.Count;

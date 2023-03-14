@@ -1,8 +1,21 @@
-﻿function setCountdown(){
+﻿
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function setCountdown() {
     const quizDuration = 1000 * 60 *30 ; // 30 minutes
-    
+
+    let startNew = getCookie("start");
+    let startTime;
     // Get the starting time from localStorage, or set it to the current time if it's not set yet
-    let startTime = localStorage.getItem('quizStartTime') || new Date().getTime();
+    if (startNew) {
+        startTime = startNew;
+    } else {
+        startTime = localStorage.getItem('quizStartTime') || new Date().getTime();
+    }
 
     // Update the stored starting time in localStorage
     localStorage.setItem('quizStartTime', startTime);

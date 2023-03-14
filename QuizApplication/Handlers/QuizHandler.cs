@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using QuizApplication.DbOperations;
 using QuizApplication.Entities;
 using QuizApplication.Models;
@@ -12,11 +13,13 @@ namespace QuizApplication.Handlers
     {
         private readonly IQuizRepository _quizRepository;
         private readonly IQuestionRepository _questionRepository;
+        private readonly QuizSettings settings;
 
-        public QuizHandler(IQuizRepository quizRepository, IQuestionRepository questionRepository)
+        public QuizHandler(IQuizRepository quizRepository, IQuestionRepository questionRepository, IOptionsSnapshot<QuizSettings> settings)
         {
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
+            this.settings = settings.Value;
         }
 
 
@@ -30,7 +33,7 @@ namespace QuizApplication.Handlers
             // create a quiz from 3 random questions selected from db
             var quiz = new Quiz()
             {
-                QuizQuestions = await GetRandomQuestions(),
+                QuizQuestions = await GetRandomQuestions(settings.QuestionCount),
                 CreatedAt = DateTime.Now,
                 User = user,
                 UserId = user.Id

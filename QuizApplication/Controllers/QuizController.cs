@@ -46,12 +46,21 @@ namespace QuizApplication.Controllers
 
                 var quiz = await _quizHandler.GetQuiz((int) quizId);
                 // current quiz question
-                var quizQuestion = quiz.QuizQuestions.First(q => !q.IsSubmitted());
+                var quizQuestion = await GetNextQuestion(quiz, 0);
+                if (quizQuestion.QuestionNo == 1 && quizQuestion.StartedAt == null)
+                {
+                    DateTimeOffset d = DateTimeOffset.UtcNow;
+                    long time = d.ToUnixTimeMilliseconds();
+                    Response.Cookies.Append("start", time.ToString());
+                }
+
                 // updated started at of quizQuestion
-                quizQuestion.StartedAt = DateTime.Now;
+                //quizQuestion.StartedAt = DateTime.Now;
                 // update quizQuestion in db
-                await _quizHandler.UpdateQuizQuestion(quizQuestion);
+                //await _quizHandler.UpdateQuizQuestion(quizQuestion);
                 var model = new QuizViewModel(quiz, quizQuestion);
+
+                
 
                 return View(model);
             }
@@ -94,6 +103,7 @@ namespace QuizApplication.Controllers
 
                 var model = new QuizViewModel(quiz, question);
                 
+
                 return View(model);
             }
             
@@ -108,12 +118,10 @@ namespace QuizApplication.Controllers
         /// <returns></returns>
         private async Task<QuizQuestion> GetNextQuestion(Quiz quiz, int questionNumber)
         {
-            var current = quiz.QuizQuestions.First(
-                q => q.QuestionNo == questionNumber);
-            current.StartedAt = DateTime.Now;
-            // update quizQuestion in db
-            await _quizHandler.UpdateQuizQuestion(current);
-            return quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber + 1);
+            var nextq = quiz.QuizQuestions.First(q => q.QuestionNo == questionNumber + 1);
+            nextq.StartedAt = DateTime.Now;
+            await _quizHandler.UpdateQuizQuestion(nextq);
+            return nextq;
         }
 
         private void RemoveQuizIdInSession()

@@ -22,6 +22,11 @@ namespace QuizApplication.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Home", "Quiz");
+            }
+
             return View();
         }
 
@@ -32,10 +37,7 @@ namespace QuizApplication.Controllers
             // return url from query string
             var returnUrl = Request.Query["ReturnUrl"].ToString();
             
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Home", "Quiz");
-            }
+            
             
             if (!ModelState.IsValid)
             {
@@ -66,6 +68,7 @@ namespace QuizApplication.Controllers
             {
                 return RedirectToAction("Home", "Quiz");
             }
+
             return View();
         }
         

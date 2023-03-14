@@ -43,7 +43,7 @@ namespace QuizApplication.DbOperations
         public int GetQuizRank(Quiz quiz)
         {
             // after ordering by score, get the rank of the user
-            return _context.Quizzes.OrderByDescending(q => q.Score).IndexOf(quiz);
+            return _context.Quizzes.OrderByDescending(q => q.Score).IndexOf(quiz) + 1;
         }
 
         public Task UpdateQuizQuestion(QuizQuestion quizQuestion)
