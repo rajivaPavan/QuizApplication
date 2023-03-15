@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.AppConfiguration;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+
 
 namespace QuizApplication
 {
@@ -32,10 +27,12 @@ namespace QuizApplication
                         config.AddAzureAppConfiguration(options =>
                         {
                             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                            
-                            options.Connect(connectionString)
-                                // Load all keys that start with `MoraMathsQuizConfig:` and have no label
-                                .Select("*", environment) 
+
+                            var azureAppConfigurationOptions = options.Connect(connectionString)
+                                // Load all keys and have no label
+                                .Select("*");
+
+                            azureAppConfigurationOptions 
                                 // Configure to reload configuration if the registered sentinel key is modified
                                 .ConfigureRefresh(refreshOptions =>
                                     refreshOptions.Register("*", refreshAll: true));

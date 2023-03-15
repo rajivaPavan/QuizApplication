@@ -1,15 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using QuizApplication.Entities
+<!DOCTYPE html>
 <html>
 <head>
+    @await Html.PartialAsync("MetaTags")
     <title>@ViewData["Title"]</title>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
 @* if logged in *@
-@if (User.Identity is {IsAuthenticated: true })
+@if (User.Identity is {IsAuthenticated: true } && User.IsInRole(AppUserRoles.Admin))
 {
     @await Html.PartialAsync("NavBar")
 }

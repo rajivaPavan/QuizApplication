@@ -74,7 +74,15 @@ $("#next-btn").click(()=>{
     submitQuestion();
 });
 
-$("#submit-btn").click(()=> {
+const submitHandler = () => {
     localStorage.removeItem('quizStartTime');
     submitQuestion(true);
+};
+
+$("#submit-btn").click(()=> {
+    submitHandler();
+});
+
+$("#submit-btn-2").click(()=> {
+    submitHandler();
 });

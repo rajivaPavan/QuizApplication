@@ -1,5 +1,7 @@
 ﻿@model QuizApplication.ViewModels.AccountViewModels.RegisterViewModel
-
+@{
+    Layout = "_Layout";
+}
 @section Styles
 {
     <link rel="stylesheet" href="~/css/form.css"/>
@@ -17,9 +19,9 @@
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="Username">Name:</label>
+                    <label for="Name">Name:</label>
                     <input asp-for="Name" type="text" class="form-control"
-                           id="Name" name="Username" placeholder="Enter your first name and surname" required>
+                           id="Name" name="Name" placeholder="Enter your first name and surname" required>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -27,7 +29,12 @@
                     <input asp-for="Email" type="email" class="form-control" 
                            id="Email" name="Email" placeholder="Enter any active email address" required>
                     <span class="text-danger" asp-validation-for="Email"></span>
-                    
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber">Phone Number:</label>
+                    <input asp-for="PhoneNumber" type="text" class="form-control" 
+                           id="PhoneNumber" name="PhoneNumber" placeholder="Enter your phone number" required>
+                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
                 </div>
                 <div class="form-group">
                     <label for="Password">Password:</label>

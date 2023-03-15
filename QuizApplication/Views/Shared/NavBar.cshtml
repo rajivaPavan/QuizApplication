@@ -1,9 +1,11 @@
-﻿<nav class="navbar navbar-expand-lg navbar-light py-0 px-2" style="background-color: rgba(255,255,255,0.9)">
+﻿<nav class="navbar navbar-expand-lg py-0 px-2 fixed-top">
     <div class="container-fluid px-2">
-        <a class="navbar-brand" href="#">
-            <img class="img-fluid" style="height: 40px; object-fit: cover" 
-                 src="https://assetimagesweb.blob.core.windows.net/moramaths/mora_maths_logo_wide.png" 
+        <a class="navbar-brand d-flex" asp-action="Home" asp-controller="Quiz">
+            <img class="img-fluid bg-white rounded p-1 mr-2" style="height: 40px; object-fit: cover" 
+                 src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/mora_maths_logo_wide.png" 
                  alt="">
+            <img src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/m-day_logo_white.png"
+                 style="height: 40px; object-fit: cover" class="img-fluid" alt="">
         </a>
         <!-- Add your navigation menu items here -->
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" 
@@ -12,9 +14,9 @@
                     </button>
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <!-- Left navbar links -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a asp-action="Instructions" asp-controller="Quiz" class="nav-link">Attempt Quiz</a>
+                    <a asp-action="Home" asp-controller="Quiz" class="nav-link">Attempt Quiz</a>
                 </li>
                 <li>
                     <a asp-action="Leaderboard" asp-controller="Quiz" class="nav-link">Leaderboard</a>
@@ -35,9 +37,9 @@
             @* if user logged in *@
             @if (User.Identity is {IsAuthenticated: true })
             {
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a asp-action="Logout" asp-controller="Account" class="btn btn-info">Logout</a>
+                        <a asp-action="Logout" id="logout" asp-controller="Account" class="btn btn-tertiary">Logout</a>
                     </li>
                 </ul>
             }

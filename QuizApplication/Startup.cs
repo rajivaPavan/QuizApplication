@@ -13,16 +13,20 @@ using QuizApplication.Models;
 using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.FeatureFilters;
 using QuizApplication.Authorization;
+using QuizApplication.Entities;
 
 namespace QuizApplication
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly string _environmentName;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _environmentName = env.EnvironmentName;
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -75,6 +79,9 @@ namespace QuizApplication
                             new QuizAccessAndTimeRequirement());
                     });
             });
+            
+            services.Configure<QuizSettings>(
+                Configuration.GetSection($"QuizSettings:{_environmentName}"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,7 +116,7 @@ namespace QuizApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Quiz}/{action=Leaderboard}/{id?}");
+                    pattern: "{controller=Quiz}/{action=Home}/{id?}");
             });
         }
     }

@@ -6,7 +6,7 @@ namespace QuizApplication.Controllers
     {
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Instructions", "Quiz");
+            return RedirectToAction("Home", "Quiz");
         }
     }
 }
