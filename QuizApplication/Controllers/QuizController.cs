@@ -31,8 +31,8 @@ namespace QuizApplication.Controllers
             _userManager = userManager;
             _featureManager = featureManager;
             _quizSettings = options.Value;
-            _quizSettings.QuizEndAt ??= "2023/03/13 00:00:00";
-            _quizSettings.QuizStartAt ??= "2021/03/16 00:00:00";
+            _quizSettings.QuizEndAt ??= "2023/03/17 00:00:00";
+            _quizSettings.QuizStartAt ??= "2021/03/14 19:00:00";
         }
         
         [HttpGet]
@@ -55,15 +55,9 @@ namespace QuizApplication.Controllers
                     long time = d.ToUnixTimeMilliseconds();
                     Response.Cookies.Append("start", time.ToString());
                 }
-
-                // updated started at of quizQuestion
-                //quizQuestion.StartedAt = DateTime.Now;
-                // update quizQuestion in db
-                //await _quizHandler.UpdateQuizQuestion(quizQuestion);
-                var model = new QuizViewModel(quiz, quizQuestion);
-
                 
-
+                var model = new QuizViewModel(quiz, quizQuestion);
+                
                 return View(model);
             }
             
@@ -181,8 +175,11 @@ namespace QuizApplication.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var quiz = await _quizHandler.GetLastQuizForUser(_userManager.GetUserId(User));
-                model.QuizResult = new QuizResultViewModel(quiz);
-                model.UserRank = await _quizHandler.GetUserRank(quiz);
+                if(quiz != null)
+                {
+                    model.QuizResult = new QuizResultViewModel(quiz);
+                    model.UserRank = await _quizHandler.GetUserRank(quiz);
+                }
             }
             
             return View(model);
