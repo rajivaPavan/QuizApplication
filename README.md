@@ -5,13 +5,16 @@ A quiz is open for a specified number of days, and it can taken any number of ti
 
 ## Technologies Used
 
-<p align="center">
-  <img width="auto" height="150" src="https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="auto" height="150" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p align="left">
+  <img width="auto" height="100" src="https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg">
+  <!-- mysql -->
+  <img width="auto" height="100" src="https://ucarecdn.com/0295176b-b17a-4106-b3b0-5bf2b14365e6/">
+<img width="auto" height="100" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img width="auto" height="100" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img width="auto" height="100" src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg">
 </p>
-<p align="center">
-  <img width="auto" height="150" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</p> 
 
 ## Getting Started
 
@@ -20,7 +23,7 @@ To get started with the project, you'll need to follow these steps:
 1. Clone this repository to your local machine.
 2. Open the project in your preferred IDE.
 3. Ensure you have the necessary software and tools installed for the technologies listed in the previous section.
-4. Set up your database and configure your connection string.
+4. Set up your database and configure your connection strings.
 5. Run the project and navigate to the quiz page.
 
 ## How to Contribute
