@@ -1,0 +1,25 @@
+﻿@model QuizApplication.ViewModels.QuizViewModels.QuizResultViewModel
+@{
+    ViewBag.Title = "Quiz Result";
+    Layout = "_QuizLayout";
+}
+<div id="main" class="container-fluid flex-grow-1">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-5">
+                    <div class="card-header"><h2>Quiz Result</h2></div>
+                    <div class="card-body">
+                        <h4 class="mb-3">Score: @Model.Score</h4>
+                        <p>Started At: @Model.StartedAt</p>
+                        <p>Finished At: @Model.FinishedAt</p>
+                        <p>Number of Correct Answers: @Model.NoOfQuestionsCorrect / @Model.NumberOfQuestions</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary mt-4 p-3" asp-action="Leaderboard"><h3>
+                         Go to the Leaderboard
+                    </h3></a>
+                </div>
+            </div>
+        </div>
+    </div>

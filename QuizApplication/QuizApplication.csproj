@@ -5,11 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-      <Folder Include="Models" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
       <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
       <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
@@ -46,6 +41,31 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.32" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.32" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.32" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.32" />
+      <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="5.2.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.32" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.32">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\plugins" />
     </ItemGroup>
 
 </Project>

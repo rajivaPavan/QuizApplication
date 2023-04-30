@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\pavan\RiderProjects\QuizApplication-Release</_PublishTargetUrl>
+    <History>True|2023-03-13T11:56:40.5600913Z;True|2023-03-13T17:21:33.6196531+05:30;True|2023-03-13T16:49:33.3678972+05:30;True|2023-03-13T16:40:02.5220528+05:30;True|2023-03-13T01:10:03.6477526+05:30;True|2023-03-12T20:25:30.1821550+05:30;True|2023-03-12T19:12:50.2707072+05:30;True|2023-03-12T19:06:29.4985799+05:30;True|2023-03-12T18:06:55.3224803+05:30;</History>
+  </PropertyGroup>
+</Project>

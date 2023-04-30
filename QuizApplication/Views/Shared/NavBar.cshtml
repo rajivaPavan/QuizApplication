@@ -1,0 +1,49 @@
+﻿<nav class="navbar navbar-expand-lg py-0 px-2 fixed-top">
+    <div class="container-fluid px-2">
+        <a class="navbar-brand d-flex" asp-action="Home" asp-controller="Quiz">
+            <img class="img-fluid bg-white rounded p-1 mr-2" style="height: 40px; object-fit: cover" 
+                 src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/mora_maths_logo_wide.png" 
+                 alt="">
+            <img src="https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/m-day_logo_white.png"
+                 style="height: 40px; object-fit: cover" class="img-fluid" alt="">
+        </a>
+        <!-- Add your navigation menu items here -->
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" 
+                            data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a asp-action="Home" asp-controller="Quiz" class="nav-link">Attempt Quiz</a>
+                </li>
+                <li>
+                    <a asp-action="Leaderboard" asp-controller="Quiz" class="nav-link">Leaderboard</a>
+                </li>
+                @if(User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-action="ListRoles" asp-controller="Administration" class="nav-link">Roles</a>
+                    </li>
+                }
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <li class="nav-item">
+                        <a asp-action="List" asp-controller="Questions" class="nav-link">Questions</a>
+                    </li>
+                }
+            </ul>
+            @* if user logged in *@
+            @if (User.Identity is {IsAuthenticated: true })
+            {
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a asp-action="Logout" id="logout" asp-controller="Account" class="btn btn-tertiary">Logout</a>
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+</nav>
+

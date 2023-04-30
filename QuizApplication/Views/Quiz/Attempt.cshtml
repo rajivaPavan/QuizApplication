@@ -1,0 +1,141 @@
+﻿@model QuizApplication.ViewModels.QuizViewModels.QuizViewModel
+@{
+    Layout = "_QuizLayout";
+    ViewBag.Title = "Quiz";
+}
+
+@section Styles
+{
+    <style>
+        .q-image{
+         max-width: 100%;
+         max-height: 350px;
+         object-fit: contain;
+        }
+    </style>
+}
+
+<!-- Middle section with two columns -->
+<main class="flex-grow-1" id="main">
+    <div class="container-fluid py-3">
+        <div class="row">
+            <div class="col-lg-9 col-12 mb-2 mb-lg-0 order-1 order-lg-0">
+                <div class="container-fluid question-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="display-4" id="question-no">Question @Model.QuestionNumber:</h3>
+                            <p class="lead my-4" id="question-text">
+                                @Model.QuizQuestion.Question.Text
+                            </p>
+                            @if (!string.IsNullOrEmpty(Model.QuestionImage))
+                            {
+                                <div class="my-4 px-4">
+                                    <img src="@Model.QuestionImage" alt="Question image" class="img-fluid q-image"/>
+                                </div>
+                            }
+                            @if (Model.AnswerCount == 1)
+                            {
+                                <form method="post" id="text-q-a">
+                                    <div class="form-group">
+                                        <input type="text" hidden name="questionNumber"
+                                               value="@Model.QuestionNumber">
+                                        <label for="questionAnswer">Answer:</label>
+                                        <input type="text" class="form-control" name="questionAnswer" id="questionAnswer">
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" id="mcq-a">
+                                    @for (var i = 0; i < Model.QuizQuestion.Question.AnswerOptions.Count; i++)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="@("answer" + i)" name="questionAnswer"
+                                                   type="radio" value="@i">
+                                            <label class="form-check-label" for="@("answer" + i)">
+                                                <span class="custom-radio"></span>
+                                                <span>@Model.QuizQuestion.Question.AnswerOptions[i].Text</span>
+                                            </label>
+                                        </div>
+                                    }
+                                    <input type="text" hidden name="questionNumber"
+                                           value="@Model.QuestionNumber">
+                                </form>
+                            }
+                            @if (Model.QuestionNumber != Model.QuestionCount)
+                            {
+                                <div class="d-flex justify-content-end">
+                                    <btn id="next-btn" class="btn btn-tertiary px-5">Next</btn>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex justify-content-end">
+                                    <btn id="submit-btn-2" class="btn btn-primary px-5">Submit</btn>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 mb-2 mb-lg-0 order-0 order-lg-1">
+                <div class="quiz-info">
+                    <!-- Add your sidebar or additional content here, using the col-md-4 class for desktop view -->
+                    <div class="d-flex justify-content-center align-items-center card clock border border-3 rounded mb-2">
+                        <div class="py-0">
+                            <span>Time Remaining:</span>
+                        </div>
+                        <div id="timer"></div>
+                    </div>
+
+                    <div class="questions my-3">
+                        @for (int i = 1; i <= Model.QuestionCount; i++)
+                        {
+                            var isAnswered = Model.QuizQuestion.QuestionNo > i;
+                            var isCurrent = Model.QuizQuestion.QuestionNo == i;
+                            if (isAnswered)
+                            {
+                                <div class="q-no btn border border-dark attempted">Q @i</div>
+                            }
+                            else if (isCurrent)
+                            {
+                                <div class="q-no btn border border-dark active">Q @i</div>
+                            }
+                            else
+                            {
+                                <div class="q-no btn btn-light border border-dark">Q @i</div>
+                            }
+                        }
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <button class="w-100 btn @(Model.QuestionCount == @Model.QuestionNumber ? "btn-primary" : "btn-info")"
+                                id="finishBtn">
+                            Finish & Submit
+                        </button>
+                    </div>
+
+
+                    <div id="submitCheck" class="hide">
+                        <div class="my-2">
+                            <span class="px-2">Are you sure?</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+                            <div class="px-2 w-50">
+                                <div id="submit-btn" class="w-100 btn btn-secondary">Yes</div>
+                            </div>
+                            <div class="px-2 w-50">
+                                <button class="w-100 btn btn-light border border-dark" id="dontFinish">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts
+{
+    <script src="~/js/quiz.js"></script>
+}

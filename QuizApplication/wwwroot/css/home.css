@@ -1,0 +1,46 @@
+﻿.container {
+    padding-top: 30px;
+}
+.instructions {
+    background: var(--color-bg-translucent);
+}
+
+.btn-start {
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    border-radius: 1rem !important;
+}
+
+ol {
+    line-height: 30px;
+    font-size: 15px;
+    text-align: justify;
+}
+
+h1 {
+    text-align: center;
+}
+
+body{
+    background-image: none!important;
+}
+
+#main{
+    background-image: url('https://questions-gsbmcdd5ezdcb0bd.z01.azurefd.net/moramaths/home_bg.jpg')!important;
+    filter: none !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1,
+h2,
+h4,
+p,
+li {
+    color: var(--color-text);
+    line-height: 80px;
+}
+
+li {
+    line-height: 30px;
+}
